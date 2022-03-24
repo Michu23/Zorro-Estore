@@ -1,0 +1,775 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+{% load static %}
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+    integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+    integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+    crossorigin="anonymous"></script>
+<style>
+    #mySidenav #about {
+        z-index: 1000;
+        position: fixed;
+        left: -250px;
+        transition: 0.3s;
+        padding: 15px;
+        width: 300px;
+        height: fit-content;
+        text-decoration: none;
+        font-size: 20px;
+        color: white;
+        border-radius: 0 5px 5px 0;
+    }
+
+    #mySidenav #about:hover {
+        left: 0px;
+    }
+
+    #about {
+        top: 300px;
+        color: rgb(255, 255, 255);
+        background-color: #000000;
+    }
+</style>
+<!-- content -->
+<div id="mySidenav" class="sidenav p-5">
+    <div href="#" id="about" class="p-3">
+        <div class="d-flex justify-content-between ">
+            <div class="">
+                {% for i in coupon %}
+
+                <div class="py-2">
+                    <span data-id="{{i.code}}">{{i.code}}</span>
+                    <button data-id="{{i.code}}" class="px-3 btn btn-dark text-white copyy"><i class="fa fa-copy"
+                            style="font-size:12px;">Copy</i></button>
+                    <br>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="justify-content-center my-auto">
+                <h4 style="writing-mode: vertical-rl;  color:white;">
+                    MY COUPONS
+                </h4>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+{% if page == "Empty" %}
+
+{% else %}
+
+
+<div class="container mt-5 pt-5 notempty">
+    <div class="content mb-4">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">
+                        <i class="bi bi-globe2 small me-2"></i> Dashboard
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 col-sm-12 col-xs-12">
+            <div id="checkout-form-wizard">
+                <h3 class="mb-2">Shipping</h3>
+                <section class="card card-body mb-0" style="
+                box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+                padding: 30px 30px 20px 20px;
+              ">
+                    <div class="mb-4">
+                        <div class="text-muted">Choose where you want to recived your product.</div>
+                    </div>
+                    <div class="row mb-4">
+                        {% for i in addr %}
+
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingOne{{ forloop.counter }}">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#flush-collapseOne{{ forloop.counter }}" aria-expanded="false"
+                                        aria-controls="flush-collapseOne{{ forloop.counter }}">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" value="{{i.id}}" name="address"
+                                                checked id="flexRadioDefault1">
+                                            <div class="d-flex justify-content-between">
+                                                <h5 class="form-check-label mb-0 d-flex justify-content-between"
+                                                    for="flexRadioDefault1">
+                                                    <div>
+                                                        <b> {{i.fname}}
+                                                            {{i.lname}}
+                                                        </b>
+                                                    </div>
+                                                    <div class="">
+                                                        <span style="color: grey;">
+                                                            ({{i.type}} -
+                                                            {{i.city}})
+                                                        </span>
+                                                    </div>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseOne{{ forloop.counter }}" class="accordion-collapse collapse"
+                                    aria-labelledby="flush-headingOne{{ forloop.counter }}"
+                                    data-bs-parent="#accordionFlushExample">
+                                    <div class="card mb-3">
+                                        <div class="card-body d-flex flex-column gap-2">
+                                            <div class="form-check">
+
+                                                <h5 class="form-check-label mb-0" for="flexRadioDefault1">
+                                                    {{i.type}}
+                                                </h5>
+                                            </div>
+                                            <div>{{i.fname}} {{i.lname}}</div>
+                                            <div>{{i.address}}</div>
+                                            <div>
+                                                <i class="bi bi-telephone me-2"></i>{{i.phone}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                        <p>
+                            <a class="btn btn-outline-dark btn-dark  text-white" data-bs-toggle="collapse"
+                                href="#collapseExample" role="button" aria-expanded="false"
+                                aria-controls="collapseExample">
+                                <i class="bi bi-plus-circle bg-dark text-white"></i> Add New Address
+                            </a>
+                        </p>
+                        <div class="collapse" id="collapseExample">
+                            <div class="card card-body">
+                                <h3 class="card-title text-center mb-4">Enter Details</h3>
+                                <form method="POST" action="{% url 'UserAddress' %}">
+                                    {% csrf_token %}
+                                    {% load crispy_forms_tags %}
+                                    <div class="row">
+                                        <div class="col-md-12 p-2">
+                                            <div class="field-group">
+                                                <div class="content-input-field">
+                                                    <div>
+                                                        <label for="floatingInput"><b>{{form.label}}</b></label>
+                                                    </div>
+                                                    <div>
+                                                        {{form|crispy}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-dark mt-3 ">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                </section>
+                <div class="surprise mt-3 d-block d-sm-none
+                	d-none d-sm-block d-md-none d-none d-md-block d-lg-none">
+                    <div class=" card mb-4" style="
+                box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+                padding: 30px 30px 20px 20px; background-color:white
+              ">
+                        {% if page == 'BuyNow' %}
+                        <div class="card-body">
+
+                            {% if order.get_cart_oldtotall == order.get_cart_totall %}
+                            <div class="list-group list-group-flush">
+                                <div class="list-group-item d-flex px-0">
+                                    <a href="{% url 'Product' product.id %}" style="cursor: pointer" class="me-3">
+                                        <img src="{{product.image1.url}}" class="rounded" width="60" alt="">
+                                    </a>
+                                    <div>
+                                        <a href="{% url 'Product' product.id %}" style="cursor: pointer">
+                                            <h5><strong>{{product.name}}</strong></h5>
+                                        </a>
+                                        <div>
+                                            <h5 class="px-2">{{product.newpriceinr}}</h5>
+
+                                        </div>
+                                    </div>
+                                    <div class="text-end ms-auto"></div>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="list-group list-group-flush">
+                                <div class="list-group-item d-flex px-0">
+                                    <a href="{% url 'Product' product.id %}" style="cursor: pointer" class="me-3">
+                                        <img src="{{product.image1.url}}" class="rounded" width="60" alt="">
+                                    </a>
+                                    <div>
+                                        <a href="{% url 'Product' product.id %}" style="cursor: pointer">
+                                            <h5><strong>{{product.name}}</strong></h5>
+                                        </a>
+                                        <div>
+                                            <h5 class="px-2"><strong>{{product.newpriceinr}}</strong></h5>
+                                            <p style="text-decoration: line-through;" class="text-muted">
+                                                {{product.priceinr}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="text-end ms-auto"></div>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                        </div>
+                        {% else %}
+                        <div class="card-body my-0 p-0 ">
+                            {% for i in items %}
+
+                            <div class="list-group list-group-flush my-2 ps-4">
+                                <div class="list-group-item d-flex px-0">
+                                    <a href="{% url 'Product' i.product.id %}" style="cursor: pointer" class="me-3">
+                                        <img src="{{i.product.image1.url}}" class="rounded" width="60" alt="">
+                                    </a>
+                                    <div>
+                                        <a href="{% url 'Product' i.product.id %}" style="cursor: pointer">
+                                            <h6><strong>{{i.product.name}}</strong></h6>
+                                        </a>
+                                        <div>{{i.quantity}} items x {{i.product.newpriceinr}}</div>
+                                        <div><strong>Total= {{i.get_total}}</strong> </div>
+                                    </div>
+                                    <div class="text-end ms-auto"></div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-12 pb-3" style="
+          box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+          padding: 30px 30px 20px 20px; background-color:white; height: 200px
+        ">
+
+                        <div class="cart__discount pb-3">
+                            <div><strong>Discount codes</strong></div>
+
+
+                            <form class="mb-3 mt-2">
+                                <input type="text" placeholder="Coupon code" class="abc coupon_input">
+                                <button class="submit_coupon" type="button">Apply</button>
+                            </form>
+
+                            <div class="applied text-success px-2 py-0 m-0 d-none">&#10004; Coupon applied</div>
+                            <div class="expire text-danger px-2 py-0 m-0 d-none">&#x274C; Coupon expired</div>
+                            <div class="used text-danger px-2 py-0 m-0 d-none">&#x274C; Coupon already used</div>
+                            <div class="invalid text-danger px-2 py-0 m-0 d-none">&#x274C; Coupon invalid</div>
+                            <div class="blank text-danger px-2 py-0 m-0 d-none">&#x274C; Invalid entry</div>
+                        </div>
+                    </div>
+                    <div class="card my-4 p-0" style="
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            padding: 30px 30px 20px 20px;
+          ">
+                        {% if order.get_cart_oldtotall == order.get_cart_totall %}
+                        {% else %}
+                        <div class="container-fluid p-0">
+                            <div class="alert alert-success alert-dismissible px-5" role="alert">
+                                Congratulations, Offer Applied
+                                <button type="button" class="btn" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="True">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="coupalert container-fluid p-0 d-none">
+                            <div class="alert alert-success alert-dismissible px-5" role="alert">
+                                &#10004; Coupon Applied
+                                <button type="button" class="btn" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="True">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row justify-content-center mb-3">
+                                <div class="col-5 text-end">Total :</div>
+                                <div class="col-7">{{order.get_cart_oldtotall}}</div>
+                            </div>
+
+                            <div class=" discountdiv row justify-content-center mb-3 d-none">
+                                <div class="col-5 text-end">Discount :</div>
+                                <div class="col-7"><span class="text-danger discountt"></span></div>
+                            </div>
+
+                            <div class=" offerdiv row justify-content-center mb-3 d-none">
+                                <div class="col-5 text-end">Offer Applied :</div>
+                                <div class="col-7"><span class="text-danger lessedmoney"></span></div>
+                            </div>
+
+                            <div class="row justify-content-center normal">
+                                <div class="col-5 text-end">
+                                    <strong>Sub Total :</strong>
+                                </div>
+                                <div class="col-7">
+                                    <strong class="totalll">{{order.get_cart_totall}}</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="my-3">
+                    <h3 class="mb-2">Payment</h3>
+                    <section class="card card-body mb-0" style="
+                    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+                    padding: 30px 30px 20px 20px;
+                  ">
+                        <div class="mb-4">
+                            <div class="text-muted">Choose your payment method.</div>
+                        </div>
+
+
+                        <div class="my-2">
+                            <button id="razorpaybutton" class="btn btn-secondary btn-lg w-100 py-3"><img width="50"
+                                    class="me-3">Razorpay</button>
+                        </div>
+                        <div class="my-2">
+                            <button class="btn btn-dark btn-lg w-100" id="proceed"><img width="50" class="me-3"
+                                    src="{% static 'assets/images/cash-on-delivery-logo.png' %}" alt="...">Cash
+                                on
+                                Delivery</button>
+                        </div>
+                        <div class="my-2">
+                            <div id="paypal-button-container"></div>
+                        </div>
+
+                        {% if order.status == "BuyNow" %}
+                        <div class="my-3">
+                            <a href="{% url 'UserCart' %}"><button class="btn btn-outline-dark btn-lg">Continue
+                                    Shopping</button></a>
+                        </div>
+                        {% else %}
+                        <div class="my-3">
+                            <a href="{% url 'UserCart' %}"><button class="btn btn-outline-dark btn-lg">Back to
+                                    Cart</button></a>
+                        </div>
+                        {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 d-none  d-lg-block d-xl-block
+        
+        ">
+            <h3 class="mb-2">Order Summary</h3>
+            <div class="surprise d-none d-sm-block
+            d-sm-none d-md-block
+            d-md-none d-lg-block d-md-none d-lg-block">
+                <div class="card mb-4" style="
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            padding: 30px 30px 20px 20px; background-color:white
+          ">
+                    {% if page == 'BuyNow' %}
+                    <div class="card-body">
+
+                        {% if order.get_cart_oldtotall == order.get_cart_totall %}
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item d-flex px-0">
+                                <a href="{% url 'Product' product.id %}" style="cursor: pointer" class="me-3">
+                                    <img src="{{product.image1.url}}" class="rounded" width="60" alt="">
+                                </a>
+                                <div>
+                                    <a href="{% url 'Product' product.id %}" style="cursor: pointer">
+                                        <h5><strong>{{product.name}}</strong></h5>
+                                    </a>
+                                    <div>
+                                        <h5 class="px-2">{{product.newpriceinr}}</h5>
+
+                                    </div>
+                                </div>
+                                <div class="text-end ms-auto"></div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item d-flex px-0">
+                                <a href="{% url 'Product' product.id %}" style="cursor: pointer" class="me-3">
+                                    <img src="{{product.image1.url}}" class="rounded" width="60" alt="">
+                                </a>
+                                <div>
+                                    <a href="{% url 'Product' product.id %}" style="cursor: pointer">
+                                        <h5><strong>{{product.name}}</strong></h5>
+                                    </a>
+                                    <div>
+                                        <h5 class="px-2"><strong>{{product.newpriceinr}}</strong></h5>
+                                        <p style="text-decoration: line-through;" class="text-muted">
+                                            {{product.priceinr}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="text-end ms-auto"></div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                    </div>
+                    {% else %}
+                    <div class="card-body my-0 p-0 ">
+                        {% for i in items %}
+
+                        <div class="list-group list-group-flush my-2 ps-4">
+                            <div class="list-group-item d-flex px-0">
+                                <a href="{% url 'Product' i.product.id %}" style="cursor: pointer" class="me-3">
+                                    <img src="{{i.product.image1.url}}" class="rounded" width="60" alt="">
+                                </a>
+                                <div>
+                                    <a href="{% url 'Product' i.product.id %}" style="cursor: pointer">
+                                        <h6><strong>{{i.product.name}}</strong></h6>
+                                    </a>
+                                    <div>{{i.quantity}} items x {{i.product.newpriceinr}}</div>
+                                    <div><strong>Total= {{i.get_total}}</strong> </div>
+                                </div>
+                                <div class="text-end ms-auto"></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-12" style="
+          box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+          padding: 30px 30px 20px 20px; background-color:white; height: 200px
+        ">
+
+                    <div class="cart__discount">
+                        <div><strong>Discount codes</strong></div>
+
+
+                        <form class="mb-3 mt-2">
+                            <input type="text" placeholder="Coupon code" class="abc coupon_input">
+                            <button class="submit_coupon" type="button">Apply</button>
+                        </form>
+
+                        <div class="applied text-success px-2 py-0 m-0 d-none">&#10004; Coupon applied</div>
+                        <div class="expire text-danger px-2 py-0 m-0 d-none">&#x274C; Coupon expired</div>
+                        <div class="used text-danger px-2 py-0 m-0 d-none">&#x274C; Coupon already used</div>
+                        <div class="invalid text-danger px-2 py-0 m-0 d-none">&#x274C; Coupon invalid</div>
+                        <div class="blank text-danger px-2 py-0 m-0 d-none">&#x274C; Invalid entry</div>
+                    </div>
+                </div>
+                <div class="card my-4 p-0" style="
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            padding: 30px 30px 20px 20px;
+          ">
+                    {% if order.get_cart_oldtotall == order.get_cart_totall %}
+                    {% else %}
+                    <div class="container-fluid p-0">
+                        <div class="alert alert-success alert-dismissible px-5" role="alert">
+                            Congratulations, Offer Applied
+                            <button type="button" class="btn" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="True">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="coupalert container-fluid p-0 d-none">
+                        <div class="alert alert-success alert-dismissible px-5" role="alert">
+                            &#10004; Coupon Applied
+                            <button type="button" class="btn" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="True">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row justify-content-center mb-3">
+                            <div class="col-5 text-end">Total :</div>
+                            <div class="col-7">{{order.get_cart_oldtotall}}</div>
+                        </div>
+
+                        <div class=" discountdiv row justify-content-center mb-3 d-none">
+                            <div class="col-5 text-end">Discount :</div>
+                            <div class="col-7"><span class="text-danger discountt"></span></div>
+                        </div>
+
+                        <div class=" offerdiv row justify-content-center mb-3 d-none">
+                            <div class="col-5 text-end">Offer Applied :</div>
+                            <div class="col-7"><span class="text-danger lessedmoney"></span></div>
+                        </div>
+
+                        <div class="row justify-content-center normal">
+                            <div class="col-5 text-end">
+                                <strong>Sub Total :</strong>
+                            </div>
+                            <div class="col-7">
+                                <strong class="totalll">{{order.get_cart_totall}}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{% endif %}
+
+<script
+    src="https://www.paypal.com/sdk/js?client-id=AdpywOlgCr8HCcGzu0AIzoIG9XJq-sW3O4Ls_IaLmu-6mI6aZRkDmePN-UV_SOpZRQhGAUV3AuBch0y8&currency=USD"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<script>
+    var text = "{{items}}"
+    if (text == "&lt;QuerySet []&gt;") {
+
+        location.href = "{% url 'UserCart' %}"
+    }
+
+    $("#proceed").on("click", function (e) {
+        //var payment = $('input[name="payment"]:checked').val();
+        var address = $('input[name="address"]:checked').val();
+
+        Swal.fire({
+            title: 'Place Order?',
+            text: "",
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'proceed' %}",
+                    data: {
+                        //payment: payment,
+                        address: address,
+                        csrfmiddlewaretoken: "{{ csrf_token }}"
+                    },
+                    dataType: "json",
+                    success: function (response) {
+                        Swal.fire(
+                            'Order Placed!',
+                            'Your order has been placed',
+                            'success'
+                        ).then((result) => {
+                            location = '{% url "invoicedetails" %}'
+                        })
+                    },
+                });
+
+            }
+        })
+
+    });
+</script>
+
+
+
+<script>
+    $('.submit_coupon').on('click', function (e) {
+        let messages = []
+        input_code = $('.coupon_input').val()
+        if (input_code == '' || input_code == null) {
+
+
+            $(".blank").removeClass("d-none");
+        }
+        else {
+
+            data = { 'input_code': input_code }
+            $.ajax({
+                url: "{% url 'verifycoupon' %}",
+                data: data,
+                dataType: 'json',
+                success: function (resp) {
+                    if (resp.percentage == null || resp.percentage == '') {
+
+                        $(".totalll").text(resp.total_amount);
+
+                        $(".invalid").removeClass("d-none");
+                        $(".expire").addClass("d-none");
+                        $(".used").addClass("d-none");
+                        $(".blank").addClass("d-none");
+                        $(".applied").addClass("d-none");
+                    }
+                    else if (resp.percentage == 'used') {
+
+                        $(".totalll").text(resp.total_amount);
+
+
+                        $(".used").removeClass("d-none");
+                        $(".expire").addClass("d-none");
+                        $(".invalid").addClass("d-none");
+                        $(".blank").addClass("d-none");
+                        $(".applied").addClass("d-none");
+                        $(".discountdiv").addClass("d-none");
+                        $(".offerdiv").addClass("d-none");
+                    }
+                    else {
+
+                        $(".totalll").text(resp.total_amount);
+                        $(".coupon").removeClass("d-none");
+                        $(".coupalert").removeClass("d-none");
+                        $(".expire").addClass("d-none");
+                        $(".used").addClass("d-none");
+                        $(".invalid").addClass("d-none");
+                        $(".blank").addClass("d-none");
+                        $(".applied").removeClass("d-none");
+                        $(".offerdiv").removeClass("d-none");
+                        $(".discountt").text(resp.percentage + "%");
+                        $(".discountdiv").removeClass("d-none");
+                        $('.lessedmoney').text("-" + resp.lessedmoney);
+                    }
+                }
+            })
+        }
+    });
+</script>
+
+
+<script>
+    // Render the PayPal button into #paypal-button-container
+    var totalinr = parseFloat('{{ order.get_cart_total }}')
+    var totalamt = totalinr / 75
+    paypal
+        .Buttons({
+            // Set up the transaction
+            createOrder: function (data, actions) {
+                return actions.order.create({
+                    purchase_units: [
+                        {
+                            amount: {
+                                value: parseFloat(totalamt).toFixed(2),
+                            },
+                        },
+                    ],
+                });
+            },
+            // Finalize the transaction
+            onApprove: function (data, actions) {
+                return actions.order.capture().then(function (orderData) {
+                    var address = $('input[name="address"]:checked').val();
+                    alert(address)
+                    data.address = address
+
+
+                    $.ajax({
+                        method: "POST",
+                        url: "{% url 'paypal' %}",
+                        data: data,
+                        success: function (responsec) {
+
+                            Swal.fire(
+                                'Order Placed!',
+                                'Your order has been placed',
+                                'success'
+                            ).then((result) => {
+                                location = '{% url "invoicedetails" %}'
+                            })
+                        }
+                    });
+                });
+            },
+        })
+        .render("#paypal-button-container");
+</script>
+
+<script>
+    $('.copyy').on('click', function (e) {
+        var value = $(this).data("id");
+        $('.abc').val(value);
+        navigator.clipboard.writeText(value).then(function () {
+            console.log('Async: Copying to clipboard was successful!');
+        }, function (err) {
+            console.error('Async: Could not copy text: ', err);
+        });
+
+
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#razorpaybutton').click(function () {
+
+            var address = $('input[name="address"]:checked').val();
+            console.log(address)
+            $.ajax({
+                method: 'GET',
+                url: '{% url "payrazor" %}',
+                data: {
+                    address: address
+                },
+
+                success: function (response) {
+                    console.log(response.total)
+                    var options = {
+                        "key": "rzp_test_aRq4XkP2vJ58Xt", // Enter the Key ID generated from the Dashboard
+                        "amount": response.total * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                        "currency": "INR",
+                        "name": "Zorro",
+                        "description": "Thankyou for shopping with us!",
+                        "image": "https://ibb.co/8Mm86Tw",
+                        // "order_id": "order_9A33XWu170gUtm", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                        "handler": function (responseb) {
+
+                            data = {
+                                'order_id': responseb.razorpay_payment_id,
+                                address: address,
+
+                            }
+
+
+                            $.ajax({
+                                type: "POST",
+                                url: "{% url 'razorpay' %}",
+                                data: data,
+                                success: function (responsec) {
+
+                                    Swal.fire(
+                                        'Order Placed!',
+                                        'Your order has been placed',
+                                        'success'
+                                    ).then((result) => {
+                                        location = '{% url "invoicedetails" %}'
+                                    })
+                                }
+                            });
+
+                        },
+                        "prefill": {
+                            "name": response.name,
+                            "email": response.email,
+                            "contact": response.phone,
+                        },
+                        "theme": {
+                            "color": "#3399cc"
+                        }
+                    };
+
+                    var rzp1 = new Razorpay(options);
+                    rzp1.open();
+                }
+            })
+        });
+    });
+</script>
+
+<script>
+
+</script>
+
+
+{% endblock %}

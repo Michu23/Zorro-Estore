@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Zorro | Admin </title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" />
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com/">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&amp;display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap icons -->
+    <link rel="stylesheet" href="{% static 'dist/icons/bootstrap-icons-1.4.0/bootstrap-icons.min.css' %}"
+        type="text/css">
+    <!-- Bootstrap Docs -->
+    <link rel="stylesheet" href="{% static 'dist/css/bootstrap-docs.css' %}" type="text/css">
+
+    <!-- Slick -->
+    <link rel="stylesheet" href="{% static 'libs/slick/slick.css' %}" type="text/css">
+
+    <!-- Main style file -->
+    <link rel="stylesheet" href="{% static 'dist/css/app.min.css' %}" type="text/css">
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+
+</head>
+
+<body>
+
+    <!-- preloader -->
+    <div class="preloader">
+        <img src="{% static 'img/logo.jpg' %}" alt="logo">
+        <div class="preloader-icon"></div>
+    </div>
+    <!-- ./ preloader -->
+
+
+
+    <!-- menu -->
+    <div class="menu">
+        <div class="menu-header">
+            <a href="{% url 'AdminHome' %}" class="menu-header-logo">
+                <img src="{% static 'img/logo.svg' %}" alt="logo">
+            </a>
+            <a href="{% url 'AdminHome' %}" class="btn btn-sm menu-close-btn">
+                <i class="bi bi-x"></i>
+            </a>
+        </div>
+        <div class="menu-body">
+            <div class="dropdown justify-content-end">
+                <a href="#" class="d-flex align-items-center" data-bs-toggle="dropdown">
+                    <div class="avatar me-3">
+                        <img src="{% static 'assets/images/user/man_avatar3.jpg' %}" class="rounded-circle" alt="image">
+                    </div>
+                    <div>
+                        <div class="fw-bold">Michu</div>
+                        <small class="text-muted">CEO</small>
+                    </div>
+
+                </a>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <a href="#" class="dropdown-item d-flex align-items-center">
+                        <i class="bi bi-person dropdown-item-icon"></i> Profile
+                    </a>
+
+
+                    <a id="logout" class="dropdown-item d-flex align-items-center text-danger">
+                        <button type="button" class="btn btn-danger logout" id="logout">
+                            <i class="bi bi-box-arrow-right dropdown-item-icon"></i> Logout
+                        </button>
+
+                    </a>
+                </div>
+            </div>
+            <ul>
+                <li class="menu-divider">E-Commerce</li>
+                {% if dashboard %}
+                <li>
+                    <a class="active" href="{% url 'AdminHome' %}">
+                        <span class="nav-link-icon">
+                            <i class="bi bi-bar-chart"></i>
+                        </span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                {% else %}
+                <li>
+                    <a href="{% url 'AdminHome' %}">
+                        <span class="nav-link-icon">
+                            <i class="bi bi-bar-chart"></i>
+                        </span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                {% endif %}
+                {% if abc %}
+                <li>
+                    <a class="active" href="{% url 'AdminOrders' %}">
+                        <span class="nav-link-icon">
+                            <i class="bi bi-receipt"></i>
+                        </span>
+                        <span>Orders</span>
+                    </a>
+                </li>
+                {% else %}
+                <li>
+                    <a href="{% url 'AdminOrders' %}">
+                        <span class="nav-link-icon">
+                            <i class="bi bi-receipt"></i>
+                        </span>
+                        <span>Orders</span>
+                    </a>
+                </li>
+                {% endif %}
+
+                {% if pro %}
+
+                <li>
+                    <a class="active" href="{% url 'AdminProduct' %}">
+                        <span class="nav-link-icon">
+                            <i class="bi bi-truck"></i>
+                        </span>
+                        <span>Products</span>
+                    </a>
+                </li>
+                {% else %}
+
+                <li>
+                    <a href="{% url 'AdminProduct' %}">
+                        <span class="nav-link-icon">
+                            <i class="bi bi-truck"></i>
+                        </span>
+                        <span>Products</span>
+                    </a>
+                </li>
+                {% endif %}
+
+                {% if offerpro %}
+
+                <li>
+                    <a class="active" href="{% url 'ProductOffer' %}">
+                        <span class="nav-link-icon">
+                            <i class="bi bi-truck"></i>
+                        </span>
+                        <span>Product offers</span>
+                    </a>
+                </li>
+                {% else %}
+
+                <li>
+                    <a href="{% url 'ProductOffer' %}">
+                        <span class="nav-link-icon">
+                            <i class="bi bi-truck"></i>
+                        </span>
+                        <span>Product offers</span>
+                    </a>
+                </li>
+                {% endif %}
+
+
+
+                <li>
+                    {% if cust %}
+                    <a class="active" href="{% url 'AdminCustomers' %}">
+                        <span class="nav-link-icon">
+                            <i class="bi bi-person-badge"></i>
+                        </span>
+                        <span>Customers</span>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'AdminCustomers' %}">
+                        <span class="nav-link-icon">
+                            <i class="bi bi-person-badge"></i>
+                        </span>
+                        <span>Customers</span>
+                    </a>
+                    {% endif %}
+                </li>
+                {% if sales %}
+                <li>
+                    <a class="active" href="{% url 'SalesReport' %}">
+                        <span class="nav-link-icon">
+                            <i class="bi bi-receipt"></i>
+                        </span>
+                        <span>Sales Report</span>
+                    </a>
+                </li>
+                {% else %}
+                <li>
+                    <a href="{% url 'SalesReport' %}">
+                        <span class="nav-link-icon">
+                            <i class="bi bi-receipt"></i>
+                        </span>
+                        <span>Sales Report</span>
+                    </a>
+                </li>
+                {% endif %}
+                {% if catogeries %}
+                <li>
+                    <a class="active" href="{% url 'AdminCats' %}">
+                        <span class="nav-link-icon">
+                            <i class="bi bi-archive"></i>
+                        </span>
+                        <span>Catogeries</span>
+                    </a>
+                </li>
+                {% else %}
+                <li>
+                    <a href="{% url 'AdminCats' %}">
+                        <span class="nav-link-icon">
+                            <i class="bi bi-archive"></i>
+                        </span>
+                        <span>Catogeries</span>
+                    </a>
+                </li>
+                {% endif %}
+                {% if Coupons %}
+                <li>
+                    <a class="active" href="{% url 'AdminCoupons' %}">
+                        <span class="nav-link-icon">
+                            <i class="bi bi-wallet"></i>
+                        </span>
+                        <span>Coupons</span>
+                    </a>
+                </li>
+                {% else %}
+                <li>
+                    <a href="{% url 'AdminCoupons' %}">
+                        <span class="nav-link-icon">
+                            <i class="bi bi-wallet"></i>
+                        </span>
+                        <span>Coupons</span>
+                    </a>
+                </li>
+                {% endif %}
+                {% if couponused %}
+                <li>
+                    <a class="active" href="{% url 'couponsused' %}">
+                        <span class="nav-link-icon">
+                            <i class="bi bi-wallet2"></i>
+                        </span>
+                        <span>Coupons used</span>
+                    </a>
+                </li>
+                {% else %}
+                <li>
+                    <a href="{% url 'couponsused' %}">
+                        <span class="nav-link-icon">
+                            <i class="bi bi-wallet2"></i>
+                        </span>
+                        <span>Coupons used</span>
+                    </a>
+                </li>
+                {% endif %}
+
+
+
+            </ul>
+        </div>
+    </div>
+    <!-- ./  menu -->
+
+    <!-- layout-wrapper -->
+    <div class="layout-wrapper">
+
+        <!-- header -->
+        <div class="header">
+            <div class="menu-toggle-btn">
+                <!-- Menu close button for mobile devices -->
+                <a href="#">
+                    <i class="bi bi-list"></i>
+                </a>
+            </div>
+            <!-- Logo -->
+            <a href="index.html" class="logo">
+                <img width="100" src="{% static 'https://vetra.laborasyon.com/assets/images/logo.svg' %}" alt="logo">
+            </a>
+            <!-- ./ Logo -->
+            {% if pro %}
+            <div class="page-title">Products</div>
+            {% else %}
+            <div class="page-title">Overview</div>
+
+            {% endif %}
+            <form class="search-form">
+                <!-- <div class="input-group">
+                    <button class="btn btn-outline-light" type="button" id="button-addon1">
+                        <i class="bi bi-search"></i>
+                    </button>
+                    <input type="text" class="form-control" placeholder="Search..."
+                        aria-label="Example text with button addon" aria-describedby="button-addon1">
+                    <a href="#" class="btn btn-outline-light close-header-search-bar">
+                        <i class="bi bi-x"></i>
+                    </a>
+                </div> -->
+                <h4 class="text-center mx-auto display-6 bg-dark text-white mt-2 rounded-3 py-2 w-50">Admin</h4>
+            </form>
+            <div class="header-bar ms-auto">
+                <ul class="navbar-nav justify-content-end">
+
+                    <li class="nav-item ms-3">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-danger logout" id="logout">
+                            <i class="bi bi-box-arrow-right dropdown-item-icon"></i>Logout
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade " id="exampleModalCenterlogout" data-backdrop="false" tabindex="-1"
+                            role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content bg-dark text-light">
+                                    <div class="modal-header">
+                                        <h3 class="modal-title" id="exampleModalLongTitle">Logout</h3>
+                                        <button type="button" class="close btn btn-dark" data-dismiss="modal"
+                                            aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h5>Are you sure you want to logout? </h5>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                                        <a href="{% url 'AdminLogout' %}"><button type="button"
+                                                class="btn btn-danger">Logout</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <!-- ./ header -->
+        {% for message in messages %}
+        <div class="container-fluid p-0">
+            <div class="alert {{ message.tags }} alert-dismissible px-5" role="alert">
+                {{ message }}
+                <button type="button" class="btn" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="True">&times;</span>
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+        {% block content %}
+
+        {% endblock %}
+
+
+
+    </div>
+    <!-- ./ layout-wrapper -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script>
+        $('ul li a').on('click', function () {
+            $('ul li a').removeClass('active')
+            $(this).addClass('active')
+        })
+    </script>
+    <!-- Bundle scripts -->
+    <script src="{% static 'libs/bundle.js' %}"></script>
+
+    <!-- Apex chart -->
+    <script src="{% static 'libs/charts/apex/apexcharts.min.js' %}"></script>
+
+    <!-- Slick -->
+    <script src="{% static 'libs/slick/slick.min.js' %}"></script>
+
+    <!-- Examples -->
+    <script src="{% static 'dist/js/examples/dashboard.js' %}"></script>
+
+
+    <!-- Main Javascript file -->
+    <script src="{% static 'dist/js/app.min.js' %}"></script>
+
+
+    <style>
+        .item-action-buttons {
+            display: none !important;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            $('.logout').click(function (e) {
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "The account will be logged out!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Logout!'
+                }).then((result) => {
+
+
+                    if (result.isConfirmed) {
+
+                        location = '{% url "AdminLogout" %}';
+
+                    }
+                })
+
+            });
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            $(".ajaxLoader").hide();
+            // Product Filter Start
+            $(".filter-checkbox,#priceFilterBtn").on("click", function () {
+                var _filterObj = {};
+                var _minPrice = $("#maxPrice").attr("min");
+                var _maxPrice = $("#maxPrice").val();
+                _filterObj.minPrice = _minPrice;
+                _filterObj.maxPrice = _maxPrice;
+                $(".filter-checkbox").each(function (index, ele) {
+                    var _filterVal = $(this).val();
+                    var _filterKey = $(this).data("filter");
+                    _filterObj[_filterKey] = Array.from(
+                        document.querySelectorAll(
+                            "input[data-filter=" + _filterKey + "]:checked"
+                        )
+                    ).map(function (el) {
+                        return el.value;
+                    });
+                });
+                console.log(_filterObj);
+
+                // Run Ajax
+                $.ajax({
+                    url: "{% url 'filter_shop' %}",
+                    data: _filterObj,
+                    dataType: "json",
+
+                    success: function (res) {
+                        console.log(res);
+                        $("#adminproducts").html(res.data);
+                    },
+                });
+            });
+            // End
+
+            // Filter Product According to the price
+            // $("#maxPrice").on('blur',function(){
+            // 	var _min=$(this).attr('min');
+            // 	var _max=$(this).attr('max');
+            // 	var _value=$(this).val();
+            // 	console.log(_value,_min,_max);2
+            // 	if(_value < parseInt(_min) || _value > parseInt(_max)){
+            // 		alert('Values should be '+_min+'-'+_max);
+            // 		$(this).val(_min);
+            // 		$(this).focus();
+            // 		$("#rangeInput").val(_min);
+            // 		return false;
+            // 	}
+            // });
+            // End
+        });
+
+    </script>
+
+
+
+
+</body>
+
+<!-- Mirrored from vetra.laborasyon.com/demos/default/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 04 Feb 2022 18:29:40 GMT -->
+
+</html>

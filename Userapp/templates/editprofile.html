@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<br><br><br><br><br><br>
+<div class="container m-5 p-5 w-50  mx-auto bg-dark text-light rounded ">
+  <h3 class="text-center text-white">Edit your profile here!</h3>
+  <form method="POST" enctype="multipart/form-data">
+    {% load crispy_forms_tags %}
+    {% csrf_token %}
+    <div class="row">
+
+      <div class="col-md-6 p-2">{{form.first_name|as_crispy_field}}</div>
+      <div class="col-md-6 p-2">{{form.last_name|as_crispy_field}}</div>
+      <div class="col-md-6 p-2">{{form.email|as_crispy_field}}</div>
+
+      <div class="col-md-6 p-2">{{form.phone|as_crispy_field}}</div>
+      <div class="col-md-6 p-2">{{form.username|as_crispy_field}}</div>
+      <div class="col-md-6 p-2">{{form.propic|as_crispy_field}}</div>
+
+    </div>
+    
+    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+
+  </form>
+
+  <a href="{% url 'ProfileDash' %}"><button class="btn btn-dark mt-3">Go back</button></a>
+</div>
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="form-group">
+      <div id="image-box" class="image-container"></div>
+      <button class="btn btn-outline-info" id="crop-btn" style=" margin-top: 10px; display: none;"
+        type="button">Crop</button>
+    </div>
+  </div>
+  <img src="" id="image1" style="width:400px;">
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.js"></script>
+<script src="{% static 'dist/js/crop.js' %}"></script>
+
+<style>
+  ul,
+  #hint_id_username,
+  #hint_id_password2 {
+    display: none;
+  }
+</style>
+
+{% endblock %}

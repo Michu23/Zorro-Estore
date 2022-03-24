@@ -1,0 +1,421 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<!-- Shop Details Section Begin -->
+<br><br><br><br><br>
+<section class="shop-details">
+    <div class="product__details__pic">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="product__details__breadcrumb">
+                        <a href="{% url 'UserHome' %}">Home</a>
+                        <a href="{% url 'UserShop' %}">Shop</a>
+                        <span>Product Details</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">
+                                <div class="product__thumb__pic set-bg" data-setbg="{{product.image1.url}}">
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">
+                                <div class="product__thumb__pic set-bg" data-setbg="{{product.image2.url}}">
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">
+                                <div class="product__thumb__pic set-bg" data-setbg="{{product.image3.url}}">
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">
+                                <div class="product__thumb__pic set-bg" data-setbg="{{product.image4.url}}">
+                                    <!-- <i class="fa fa-play"></i> -->
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-6 col-md-9">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                            <div class="product__details__pic__item">
+                                <img src="{{product.image1.url}}" alt="">
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tabs-2" role="tabpanel">
+                            <div class="product__details__pic__item">
+                                <img src="{{product.image2.url}}" alt="">
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tabs-3" role="tabpanel">
+                            <div class="product__details__pic__item">
+                                <img src="{{product.image3.url}}" alt="">
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tabs-4" role="tabpanel">
+                            <div class="product__details__pic__item">
+                                <img src="{{product.image4.url}}" alt="">
+                                <!-- <a href="https://www.youtube.com/watch?v=8PJ3_p7VqHw&list=RD8PJ3_p7VqHw&start_radio=1"
+                                    class="video-popup"><i class="fa fa-play"></i></a> -->
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="product__details__content">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-8">
+                    <div class="product__details__text">
+                        <h4>{{product.name}}</h4>
+                        <!-- <div class="rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-o"></i>
+                            <span> - 5 Reviews</span>
+                        </div> -->
+                        <h3>{{product.newpriceinr}}</h3>
+                        <br><br>
+                        <h4>Description</h4>
+                        <p>{{product.description}}</p>
+                        <!-- <div class="product__details__option">
+                            <div class="product__details__option__size">
+                                <span>Size:</span>
+                                <label for="xxl">xxl
+                                    <input type="radio" id="xxl">
+                                </label>
+                                <label class="active" for="xl">xl
+                                    <input type="radio" id="xl">
+                                </label>
+                                <label for="l">l
+                                    <input type="radio" id="l">
+                                </label>
+                                <label for="sm">s
+                                    <input type="radio" id="sm">
+                                </label>
+                            </div>
+                            <div class="product__details__option__color">
+                                <span>Color:</span>
+                                <label class="c-1" for="sp-1">
+                                    <input type="radio" id="sp-1">
+                                </label>
+                                <label class="c-2" for="sp-2">
+                                    <input type="radio" id="sp-2">
+                                </label>
+                                <label class="c-3" for="sp-3">
+                                    <input type="radio" id="sp-3">
+                                </label>
+                                <label class="c-4" for="sp-4">
+                                    <input type="radio" id="sp-4">
+                                </label>
+                                <label class="c-9" for="sp-9">
+                                    <input type="radio" id="sp-9">
+                                </label>
+                            </div>
+                        </div> -->
+                        <!-- <div class="product__details__cart__option">
+                            <div class="quantity">
+                                <div class="pro-qty">
+                                    <input type="text" value="1">
+                                </div>
+                            </div>
+                            <a href="#" class="primary-btn">add to cart</a>
+                        </div> -->
+                        <div class="product__details__btns__option">
+                            <a class="add-cart update-cart" data-product="{{product.id}}" data-action="add"
+                                style="cursor: pointer"><button class="btn btn-dark"><i class="fa fa-shopping-cart"
+                                        aria-hidden="true"></i> Add
+                                    To Cart</button></a>
+                            <a href="{% url 'BuyNow' product.id %}"><button class="btn btn-dark rounded-4 px-3 mx-2"> +
+                                    Buy
+                                    Now </button></a>
+
+                        </div>
+                        <div class="product__details__last__option">
+
+                            <ul>
+                                <li><span>Catogery :</span>{{product.catogery}}</li>
+                                <li><span>Brand :</span>{{product.btype}}</li>
+                                <li><span>PriceType :</span> {{product.ptype}}</li>
+                            </ul><br><br><br><br><br>
+                            <h5><span>Guaranteed Safe Checkout</span></h5>
+                            <img src="{% static 'img/shop-details/details-payment.png' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="row">
+                <div class="col-lg-12">
+                    <div class="product__details__tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#tabs-5" role="tab">Description</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabs-6" role="tab">Customer
+                                    Previews(5)</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabs-7" role="tab">Additional
+                                    information</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tabs-5" role="tabpanel">
+                                <div class="product__details__tab__content">
+                                    <p class="note">Nam tempus turpis at metus scelerisque placerat nulla deumantos
+                                        solicitud felis. Pellentesque diam dolor, elementum etos lobortis des mollis
+                                        ut risus. Sedcus faucibus an sullamcorper mattis drostique des commodo
+                                        pharetras loremos.</p>
+                                    <div class="product__details__tab__content__item">
+                                        <h5>Products Infomation</h5>
+                                        <p>A Pocket PC is a handheld computer, which features many of the same
+                                            capabilities as a modern PC. These handy little devices allow
+                                            individuals to retrieve and store e-mail messages, create a contact
+                                            file, coordinate appointments, surf the internet, exchange text messages
+                                            and more. Every product that is labeled as a Pocket PC must be
+                                            accompanied with specific software to operate the unit and must feature
+                                            a touchscreen and touchpad.</p>
+                                        <p>As is the case with any new technology product, the cost of a Pocket PC
+                                            was substantial during it’s early release. For approximately $700.00,
+                                            consumers could purchase one of top-of-the-line Pocket PCs in 2003.
+                                            These days, customers are finding that prices have become much more
+                                            reasonable now that the newness is wearing off. For approximately
+                                            $350.00, a new Pocket PC can now be purchased.</p>
+                                    </div>
+                                    <div class="product__details__tab__content__item">
+                                        <h5>Material used</h5>
+                                        <p>Polyester is deemed lower quality due to its none natural quality’s. Made
+                                            from synthetic materials, not natural like wool. Polyester suits become
+                                            creased easily and are known for not being breathable. Polyester suits
+                                            tend to have a shine to them compared to wool and cotton suits, this can
+                                            make the suit look cheap. The texture of velvet is luxurious and
+                                            breathable. Velvet is a great choice for dinner party jacket and can be
+                                            worn all year round.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tabs-6" role="tabpanel">
+                                <div class="product__details__tab__content">
+                                    <div class="product__details__tab__content__item">
+                                        <h5>Products Infomation</h5>
+                                        <p>A Pocket PC is a handheld computer, which features many of the same
+                                            capabilities as a modern PC. These handy little devices allow
+                                            individuals to retrieve and store e-mail messages, create a contact
+                                            file, coordinate appointments, surf the internet, exchange text messages
+                                            and more. Every product that is labeled as a Pocket PC must be
+                                            accompanied with specific software to operate the unit and must feature
+                                            a touchscreen and touchpad.</p>
+                                        <p>As is the case with any new technology product, the cost of a Pocket PC
+                                            was substantial during it’s early release. For approximately $700.00,
+                                            consumers could purchase one of top-of-the-line Pocket PCs in 2003.
+                                            These days, customers are finding that prices have become much more
+                                            reasonable now that the newness is wearing off. For approximately
+                                            $350.00, a new Pocket PC can now be purchased.</p>
+                                    </div>
+                                    <div class="product__details__tab__content__item">
+                                        <h5>Material used</h5>
+                                        <p>Polyester is deemed lower quality due to its none natural quality’s. Made
+                                            from synthetic materials, not natural like wool. Polyester suits become
+                                            creased easily and are known for not being breathable. Polyester suits
+                                            tend to have a shine to them compared to wool and cotton suits, this can
+                                            make the suit look cheap. The texture of velvet is luxurious and
+                                            breathable. Velvet is a great choice for dinner party jacket and can be
+                                            worn all year round.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tabs-7" role="tabpanel">
+                                <div class="product__details__tab__content">
+                                    <p class="note">Nam tempus turpis at metus scelerisque placerat nulla deumantos
+                                        solicitud felis. Pellentesque diam dolor, elementum etos lobortis des mollis
+                                        ut risus. Sedcus faucibus an sullamcorper mattis drostique des commodo
+                                        pharetras loremos.</p>
+                                    <div class="product__details__tab__content__item">
+                                        <h5>Products Infomation</h5>
+                                        <p>A Pocket PC is a handheld computer, which features many of the same
+                                            capabilities as a modern PC. These handy little devices allow
+                                            individuals to retrieve and store e-mail messages, create a contact
+                                            file, coordinate appointments, surf the internet, exchange text messages
+                                            and more. Every product that is labeled as a Pocket PC must be
+                                            accompanied with specific software to operate the unit and must feature
+                                            a touchscreen and touchpad.</p>
+                                        <p>As is the case with any new technology product, the cost of a Pocket PC
+                                            was substantial during it’s early release. For approximately $700.00,
+                                            consumers could purchase one of top-of-the-line Pocket PCs in 2003.
+                                            These days, customers are finding that prices have become much more
+                                            reasonable now that the newness is wearing off. For approximately
+                                            $350.00, a new Pocket PC can now be purchased.</p>
+                                    </div>
+                                    <div class="product__details__tab__content__item">
+                                        <h5>Material used</h5>
+                                        <p>Polyester is deemed lower quality due to its none natural quality’s. Made
+                                            from synthetic materials, not natural like wool. Polyester suits become
+                                            creased easily and are known for not being breathable. Polyester suits
+                                            tend to have a shine to them compared to wool and cotton suits, this can
+                                            make the suit look cheap. The texture of velvet is luxurious and
+                                            breathable. Velvet is a great choice for dinner party jacket and can be
+                                            worn all year round.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</section>
+<br><br><br>
+<!-- Shop Details Section End -->
+
+<!-- Related Section Begin -->
+
+<!-- Related Section End -->
+<script>
+    $('.update-cart').on('click', function (e) {
+        var product = $(this).data('product')
+        var action = $(this).data('action')
+        console.log(product)
+        console.log(action)
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'updateitem' %}",
+            data: {
+                productId: product,
+                action: action,
+                csrfmiddlewaretoken: "{{ csrf_token }}"
+            },
+            dataType: 'json',
+            success: function (response) {
+            }
+        });
+        Swal.fire(
+            'Added to cart!',
+            'Your item have added to cart',
+            'success'
+        )
+    });
+</script>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .img-zoom-container {
+
+        width: 100%
+    }
+
+    .preview {
+        display: inline-block;
+        margin: 0 10px;
+        position: relative;
+    }
+
+    .img-zoom-lens {
+        position: absolute;
+        border: 1px solid #d4d4d4;
+        /*set the size of the lens:*/
+        width: 40px;
+        height: 40px;
+    }
+
+    .img-zoom-result {
+        border: 1px solid #d4d4d4;
+        /*set the size of the result div:*/
+        width: 300px;
+        height: 300px;
+    }
+</style>
+<script>
+    $('.preview').each(function () {
+        var lens, cx, cy, img, result;
+        img = $(this).find('img.image')[0];
+        result = document.getElementById('result');
+        /*create lens:*/
+        lens = document.createElement("div");
+        lens.setAttribute("class", "img-zoom-lens");
+        /*insert lens:*/
+        img.parentElement.insertBefore(lens, img);
+        /*calculate the ratio between result DIV and lens:*/
+        cx = result.offsetWidth / lens.offsetWidth;
+        cy = result.offsetHeight / lens.offsetHeight;
+        /*set background properties for the result DIV:*/
+
+        /*execute a function when someone moves the cursor over the image, or the lens:*/
+        $(lens).on('mousemove touchmove', moveLens);
+        $(img).on('mousemove touchmove', moveLens);
+
+        function getCursorPos(e) {
+            var a, x = 0,
+                y = 0;
+            e = e || window.event;
+            /*get the x and y positions of the image:*/
+            a = img.getBoundingClientRect();
+            /*calculate the cursor's x and y coordinates, relative to the image:*/
+            x = e.pageX - a.left;
+            y = e.pageY - a.top;
+            /*consider any page scrolling:*/
+            x = x - window.pageXOffset;
+            y = y - window.pageYOffset;
+            return {
+                x: x,
+                y: y
+            };
+        }
+
+        function moveLens(e) {
+            var pos, x, y;
+            result.style.backgroundImage = "url('" + img.src + "')";
+            result.style.backgroundSize = (img.width * cx) + "px " + (img.height * cy) + "px";
+
+            /*prevent any other actions that may occur when moving over the image:*/
+            e.preventDefault();
+            /*get the cursor's x and y positions:*/
+            pos = getCursorPos(e);
+            /*calculate the position of the lens:*/
+            x = pos.x - (lens.offsetWidth / 2);
+            y = pos.y - (lens.offsetHeight / 2);
+            /*prevent the lens from being positioned outside the image:*/
+            if (x > img.width - lens.offsetWidth) {
+                x = img.width - lens.offsetWidth;
+            }
+            if (x < 0) {
+                x = 0;
+            }
+            if (y > img.height - lens.offsetHeight) {
+                y = img.height - lens.offsetHeight;
+            }
+            if (y < 0) {
+                y = 0;
+            }
+            /*set the position of the lens:*/
+            lens.style.left = x + "px";
+            lens.style.top = y + "px";
+            /*display what the lens "sees":*/
+            result.style.backgroundPosition = "-" + (x * cx) + "px -" + (y * cy) + "px";
+            console.log(result);
+        }
+
+    })
+</script>
+
+{% endblock %}
