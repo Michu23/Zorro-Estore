@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-a--96sj5+^zihkz3-w-7so%wrew&6#jo0)+_nusqv!=$4=1d3w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition 
@@ -85,9 +85,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'Zorro',
+        'NAME': config('dbname'),
         'USER': 'postgres',
+        'USER': config('dbuser'),
         'PASSWORD':'michu',
+        'PASSWORD':config('dbpass'),
         'HOST': 'localhost',
+        'HOST': config('dbhost'),
     }
 }
 
@@ -141,8 +145,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'miraspk98@gmail.com'
-EMAIL_HOST_PASSWORD = 'michu@@22'
+EMAIL_HOST_USER = config('email')
+EMAIL_HOST_PASSWORD = config('emailpass')
     
     
 # Default primary key field type
