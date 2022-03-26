@@ -161,7 +161,7 @@ def removewish(request,id):
 
 @never_cache
 def userreg(request):
-    global regform,uname
+    
     Users.objects.filter(is_active=False).delete()
     
     device = request.COOKIES['device']
@@ -248,19 +248,20 @@ def signupotpverify(request):
         else:
             messages.error(request,"Enter a valid OTP!")
             return render(request, 'otpverifysign.html')
+
         if verification_check.status == 'approved':
-            regform.is_active=True
-            regform.save()
             num=number[3:]
-            print(num)
+            reguser=Users.objects.get(phone=num)
+            reguser.is_active=True
+            reguser.device=""
+            reguser.save()
             user=Users.objects.get(phone=num)
-            guest= Users.objects.get(username=uname)
-            guest.device=""
-            guest.save()
+            
             try:
                 del request.session['phone']
             except:
                 pass
+
             login(request,user)
             return redirect('UserHome')
         else:
@@ -1036,7 +1037,7 @@ def usercheckout(request):
 
     
     couponu = [i.coupon.code for i in CouponUsed.objects.all()]
-    coup = CouponDetail.objects.exclude(code__in=couponu)
+    coup = CouponDetail.objects.exclude(user=user,code__in=couponu)
     
     form= MyAddressForm()
     addr = Address.objects.filter(cust=user)
