@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 from django.contrib.messages import constants as messages
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -84,13 +85,9 @@ WSGI_APPLICATION = 'Zorro.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Zorro',
         'NAME': config('dbname'),
-        'USER': 'postgres',
         'USER': config('dbuser'),
-        'PASSWORD':'michu',
         'PASSWORD':config('dbpass'),
-        'HOST': 'localhost',
         'HOST': config('dbhost'),
     }
 }
