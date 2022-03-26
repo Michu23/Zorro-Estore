@@ -85,11 +85,13 @@ class Order(models.Model):
 			total = total - self.couponused.loss
 			return total
 
+
 	@property
 	def get_cart_oldtotal(self):
 		order_items = self.orderitem_set.all()
 		total = sum([item.getoldtotal for item in order_items])
 		return total
+
 
 	@property
 	def get_cart_totall(self):
