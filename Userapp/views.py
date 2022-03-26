@@ -1052,8 +1052,8 @@ def invoicedetails(request):
             user = request.user
             order = Order.objects.filter(customer = user,complete=True).order_by('-id')[0]
             items=order.orderitem_set.all()
-        else:
-            return redirect("UserLogin")
+    except:
+        return redirect("UserLogin")
     context={'order':order,'items':items}
     return render(request,'invoiceinfo.html',context)
 
