@@ -63,6 +63,7 @@ def otplogin(request):
     if request.method == 'POST':
         phone = request.POST.get('number')
         number = '+91' + str(phone)
+        request.session['otpphone'] = phone
         user = None
         try:
             user = Users.objects.get(phone=phone)
@@ -83,7 +84,14 @@ def otplogin(request):
 
 @never_cache
 def otpverify(request):
+    phone = request.session.get('otpphone')
+    try:
+        number = request.session.get('otpphone')
+    except:
+        pass
     user=Users.objects.get(phone=phone)
+    number = '+91' + str(phone)
+
     if request.method == 'POST':
         otp = request.POST.get('otp')
         account_sid = config('account_sid')
@@ -104,11 +112,6 @@ def otpverify(request):
             messages.error(request,"Invalid OTP")
             return redirect ("OtpLogin")
     return render(request,'otpverify.html')
-
-
-
-
-
 
 @never_cache
 def wishlist(request):
