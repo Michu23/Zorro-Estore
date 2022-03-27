@@ -8,7 +8,7 @@ from Adminapp.models import *
 class Users(AbstractUser):
 	phone = models.CharField(max_length=11,null=True)
 	adminstatus=models.BooleanField(blank=True,default=False,null=True)
-	propic=models.ImageField(upload_to='images',default="DP.jpg" ,blank=True,null=True)
+	propic=models.ImageField(upload_to='images',default="/images/DP.jpg" ,blank=True,null=True)
 	device = models.CharField( max_length=60 , null=True , blank=True )
 	
 def __str__(self):
