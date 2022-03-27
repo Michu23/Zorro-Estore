@@ -136,7 +136,7 @@
 
   <!-- Offcanvas Menu Begin -->
   <div class="offcanvas-menu-overlay"></div>
-  <div class="offcanvas-menu-wrapper">
+  <div class="offcanvas-menu-wrapper mt-5">
     <div class="offcanvas__option">
       <div class="offcanvas__links"></div>
       <!-- <div class="offcanvas__top__hover">
@@ -149,9 +149,9 @@
             </div> -->
     </div>
     <div class="offcanvas__nav__option">
-      <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt="" /></a>
-      <a href="#"><img src="{% static 'img/icon/heart.png' %}" alt="" /></a>
-      <a href="#"><img src="{% static 'img/icon/cart.png' %}" alt="" />
+      <a href="{% url 'search' %}" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt="" /></a>
+      <a href="{% url 'mywish' %}"><img src="{% static 'img/icon/heart.png' %}" alt="" /></a>
+      <a href="{% url 'UserCart' %}"><img src="{% static 'img/icon/cart.png' %}" alt="" />
         <span>{{order.get_cart_items}}</span></a>
       <div class="price">{{order.get_cart_total}}</div>
     </div>
@@ -225,7 +225,7 @@
         <div class="col-lg-3 col-md-3">
           <div class="header__logo">
             <a href="{% url 'UserHome' %}"><img src="{% static 'img/Zorrologo.jpg' %}"
-                style="width: 40%; height: 40%; margin-top: -15px" alt="" /></a>
+                style="width: 40%; height: 40%; margin-top: -15px; " alt="" /></a>
           </div>
         </div>
         <div class="col-lg-6 col-md-6">
@@ -235,7 +235,6 @@
               <li><a href="{% url 'UserShop' %}">Shop</a></li>
               <li><a href="{% url 'UserCart' %}">Cart</a></li>
               <li><a href="{% url 'UserCheckout' %}">Checkout</a></li>
-              <li><a href="{% url 'invoicedetails' %}">Contacts</a></li>
             </ul>
           </nav>
         </div>
@@ -272,7 +271,7 @@
       <div class="row" style="background-color: black !important;">
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="footer__about">
-            <div class="footer__logo">
+            <div class="footer__logo text-center">
               <a href="#"><img src="{% static 'img/logo2.jpg' %}" alt="" /></a>
             </div>
             <p>

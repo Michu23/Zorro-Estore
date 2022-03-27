@@ -2,7 +2,7 @@
 {% block content %}
 {% load static %}
 <br><br><br><br><br><br>
-<div class="container m-5 p-5 w-50  mx-auto bg-dark text-light rounded ">
+<div class="container m-5 p-5 w-lg-50  mx-auto bg-dark text-light rounded ">
   <h3 class="text-center text-white">Edit your profile here!</h3>
   <form method="POST" enctype="multipart/form-data">
     {% load crispy_forms_tags %}
@@ -18,7 +18,7 @@
       <div class="col-md-6 p-2">{{form.propic|as_crispy_field}}</div>
 
     </div>
-    
+
     <button type="submit" class="btn btn-primary mt-3">Submit</button>
 
   </form>

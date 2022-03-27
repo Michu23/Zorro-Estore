@@ -3505,14 +3505,13 @@ ol {
 @media only screen and (max-width: 767px) {
   .canvas__open {
     display: block;
-    font-size: 22px;
+    font-size: 20px;
     color: #111111;
     height: 35px;
     width: 35px;
     line-height: 35px;
     text-align: center;
-    border: 1px solid #111111;
-    border-radius: 2px;
+
     cursor: pointer;
     position: absolute;
     right: 15px;
@@ -3658,6 +3657,7 @@ ol {
   }
   .offcanvas__nav__option {
     text-align: center;
+    margin-top: 10px;
     margin-bottom: 25px;
   }
   .offcanvas__nav__option a {
@@ -3909,7 +3909,5 @@ ol {
   border: none !important;
 }
 
-
-@media (min-width: 768){
-  
+@media (min-width: 768) {
 }
