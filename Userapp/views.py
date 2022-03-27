@@ -120,7 +120,7 @@ def wishlist(request):
         customer = request.user
     else :
         device = request.COOKIES['device']
-        customer, created = CustomUser.objects.get_or_create(device=device)
+        customer, created =Users.objects.get_or_create(device=device)
     productId = request.GET.get('productId')
     print(productId)
     action = request.GET.get('action')
@@ -305,8 +305,7 @@ def userhome(request):
             customer,created=Users.objects.get_or_create(device=device,username=device)
             order,created= Order.objects.get_or_create(customer=customer,complete=False)
         except:
-            return redirect("UserLogin")
-    
+            pass
     products = Product.objects.all()
     newproducts=Product.objects.all().order_by('-created')[:6]
     bestproducts=Product.objects.all().order_by('-price')[:6]
