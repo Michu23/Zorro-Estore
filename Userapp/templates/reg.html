@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block content %}
 <br><br><br><br><br><br>
 <div class="container m-5 p-5 w-lg-50 mx-auto bg-dark text-light rounded"
-  style="margin-top: 100px; height: fit-content; margin-bottom: -100px; max-width: 700px;">
+  style="margin-top: 100px; margin-bottom: -100px; max-width: 700px;">
   <h3 class="text-center text-white">Register here!</h3>
   <form method="POST" action="">
     {% csrf_token %} {% load crispy_forms_tags %}
@@ -19,6 +19,7 @@
     </div>
     <button type="submit" class="btn btn-primary mt-3">Submit</button>
   </form>
+  <br>
 
   <div class="text-center">
     Already a user? <a href="{% url 'UserLogin' %}">Sign in</a>
