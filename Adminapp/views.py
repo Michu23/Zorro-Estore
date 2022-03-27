@@ -220,7 +220,7 @@ def adminlogout(request):
     return redirect('AdminLogin')
 
 def admincustomers(request):
-    users = Users.objects.all().order_by('id')
+    users = Users.objects.all().exclude(email="").order_by('id')
     paginator = Paginator (users, 6)
     page = request.GET.get('page')
     paged_users = paginator.get_page(page)

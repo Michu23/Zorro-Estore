@@ -62,6 +62,14 @@
 </style>
 
 <body>
+    {% for message in messages %}
+    <div class="container-fluid p-0">
+        <div class="alert {{ message.tags }} alert-dismissible px-5" role="alert">
+            {{ message }}
+
+        </div>
+    </div>
+    {% endfor %}
     <!-- style="background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12); background-repeat: no-repeat; height: 800px;"> -->
     <!-- background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB); -->
 
