@@ -663,12 +663,14 @@ def userprofile(request):
     return render (request, "profile.html")
 
 def profiledash(request):
+    user= request.user
     customers = Users.objects.all().count()
-    orders = Order.objects.filter(customer=request.user).count()
-    product_count = Product.objects.all().count()
+    orders = Order.objects.filter(customer=user).count()
+    print(orders)
+    wishes = Wishlist.objects.filter(useradded=user).count()
     expense= Pay.objects.filter(payuser=request.user).aggregate(Sum("amount"))
-    context= {'orders':orders,}
-    return render (request, "profiledash.html")
+    context= {'orders':orders,'wishes':wishes,'expense':expense}
+    return render (request, "profiledash.html",context)
 
 @never_cache
 def editprofile(request):
@@ -1036,8 +1038,8 @@ def usercheckout(request):
             pass
 
     
-    couponu = [i.coupon.code for i in CouponUsed.objects.all()]
-    coup = CouponDetail.objects.exclude(user=user,code__in=couponu)
+    couponu = [i.coupon.code for i in CouponUsed.objects.filter(user=user)]
+    coup = CouponDetail.objects.exclude(code__in=couponu)
     
     form= MyAddressForm()
     addr = Address.objects.filter(cust=user)
