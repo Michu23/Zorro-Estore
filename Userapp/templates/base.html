@@ -186,7 +186,10 @@
               <p>
                 Welcome
                 <span style="text-transform: capitalize">{{user.username}}</span>
+                {% if user.is_authenticated %}
                 <img src="{{user.propic.url}}" height="5%" width="5%" class="rounded-circle" alt="..." />
+                {% else %}
+                {% endif %}
                 <span></span>
               </p>
             </div>
