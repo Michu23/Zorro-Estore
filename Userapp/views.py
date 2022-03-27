@@ -305,7 +305,7 @@ def userhome(request):
             customer,created=Users.objects.get_or_create(device=device,username=device)
             order,created= Order.objects.get_or_create(customer=customer,complete=False)
         except:
-            pass
+            return redirect("UserLogin")
     products = Product.objects.all()
     newproducts=Product.objects.all().order_by('-created')[:6]
     bestproducts=Product.objects.all().order_by('-price')[:6]
