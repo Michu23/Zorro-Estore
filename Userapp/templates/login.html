@@ -1,5 +1,15 @@
 {% extends 'base.html' %} {% block content %}
 <br><br><br><br><br><br>
+{% for message in messages %}
+<div class="container-fluid p-0">
+  <div class="alert {{ message.tags }} alert-dismissible px-5" role="alert">
+    {{ message }}
+    <button type="button" class="btn" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="True">&times;</span>
+    </button>
+  </div>
+</div>
+{% endfor %}
 <div class="container w-xl-50 col-lg-6 col-xl-2 bg-dark text-light col-6 col-md-6 col-sm-12 "
   style="margin-top: 100px; padding: 40px; border-radius: 10px; max-width:500px;">
 
