@@ -2,6 +2,7 @@
 <br><br><br><br><br><br>
 <div class="container w-xl-50 col-lg-6 col-xl-2 bg-dark text-light col-6 col-md-6 col-sm-12 "
   style="margin-top: 100px; padding: 40px; border-radius: 10px; max-width:500px;">
+
   <div class="text-center text-light">
     <h3 class="text-white">Login Here!</h3>
   </div>
@@ -19,11 +20,11 @@
     </div>
     <div class="mb-3 form-check">
 
-      <div class="d-flex justify-content-between">
-        <div class="text-center">
+      <div class="d-flex justify-content-between row">
+        <div class="text-center ml-0 col-6">
           New here? <a href="{% url 'UserReg' %}">Sign up!</a>
         </div>
-        <div class="text-end">
+        <div class="text-end col-6">
           <a href="{% url 'OtpLogin' %}">OTP login</a><br>
           <a href="{% url 'reset_password' %}">Reset password</a>
         </div>
@@ -31,6 +32,10 @@
     </div>
     <button type="submit" class="btn text-center btn-primary">Submit</button>
   </form>
+  <br><br>
+  <div class="text-center justify-content-center mx-auto">
+    <a href="{% url 'UserHome' %}"><button class="btn btn-primary btn-dark ">Continue Shopping</button></a>
+  </div>
 </div>
 <br /><br /><br /><br /><br />
 

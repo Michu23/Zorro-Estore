@@ -306,6 +306,7 @@ def userhome(request):
             order,created= Order.objects.get_or_create(customer=customer,complete=False)
         except:
             return redirect("UserLogin")
+
     products = Product.objects.all()
     newproducts=Product.objects.all().order_by('-created')[:6]
     bestproducts=Product.objects.all().order_by('-price')[:6]
@@ -389,7 +390,8 @@ def usershop(request):
             device=request.COOKIES['device']
             customer,created=Users.objects.get_or_create(device=device)
         except:
-            return redirect("UserLogin")
+            order=[]
+            items=[]
         
     products = Product.objects.all()
     paginator = Paginator (products, 9)
