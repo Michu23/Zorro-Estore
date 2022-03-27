@@ -390,8 +390,7 @@ def usershop(request):
             device=request.COOKIES['device']
             customer,created=Users.objects.get_or_create(device=device)
         except:
-            order=[]
-            items=[]
+            return redirect("UserLogin")
         
     products = Product.objects.all()
     paginator = Paginator (products, 9)
