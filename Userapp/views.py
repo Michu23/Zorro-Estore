@@ -318,7 +318,15 @@ def userhome(request):
 
 @never_cache
 def search(request):
-    user=request.user
+    if request.user.is_authenticated:
+        user = request.user     
+    else :
+        try:
+            device = request.COOKIES['device']
+            user, created = Users.objects.get_or_create(device=device)
+        except :
+            return redirect("UserLogin")
+
     if 'keyword' in request.GET:
         keyword = request.GET['keyword']
         if keyword:
@@ -448,6 +456,15 @@ def hightolow(request):
 
 @never_cache
 def filterview(request,id):
+    if request.user.is_authenticated:
+        customer=request.user
+    else:
+        try:
+            device=request.COOKIES['device']
+            customer,created=Users.objects.get_or_create(device=device)
+        except:
+            return redirect("UserLogin")
+
     catogery=Catogery.objects.all()
     catogeries = Catogery.objects.all().annotate(numpro=Count('product'))
     brand=Brand.objects.all()
@@ -455,13 +472,22 @@ def filterview(request,id):
     ptype=PriceType.objects.all()
     ptypes=PriceType.objects.all().annotate(ppro=Count('product'))
     products = Product.objects.filter(catogery=id)
-    wishes= Wishlist.objects.filter(useradded = request.user).values_list('productadded',flat=True)
+    wishes= Wishlist.objects.filter(useradded = customer).values_list('productadded',flat=True)
 
     context = {'products':products,'catogeries':catogeries,'brands':brands,'ptypes':ptypes,'wishes':wishes}
     return render(request, "shop.html",context)
 
 @never_cache
 def filterbrand(request,id):
+    if request.user.is_authenticated:
+        customer=request.user
+    else:
+        try:
+            device=request.COOKIES['device']
+            customer,created=Users.objects.get_or_create(device=device)
+        except:
+            return redirect("UserLogin")
+
     catogery=Catogery.objects.all()
     catogeries = Catogery.objects.all().annotate(numpro=Count('product'))
     brand=Brand.objects.all()
@@ -469,13 +495,22 @@ def filterbrand(request,id):
     ptype=PriceType.objects.all()
     ptypes=PriceType.objects.all().annotate(ppro=Count('product'))
     products = Product.objects.filter(btype=id)
-    wishes= Wishlist.objects.filter(useradded = request.user).values_list('productadded',flat=True)
+    wishes= Wishlist.objects.filter(useradded = customer).values_list('productadded',flat=True)
 
     context = {'products':products,'catogeries':catogeries,'brands':brands,'ptypes':ptypes,'wishes':wishes}
     return render(request, "shop.html",context)
 
 @never_cache
 def filterprice(request,id):
+    if request.user.is_authenticated:
+        customer=request.user
+    else:
+        try:
+            device=request.COOKIES['device']
+            customer,created=Users.objects.get_or_create(device=device)
+        except:
+            return redirect("UserLogin")
+
     catogery=Catogery.objects.all()
     catogeries = Catogery.objects.all().annotate(numpro=Count('product'))
     ptype=PriceType.objects.all()
@@ -483,7 +518,7 @@ def filterprice(request,id):
     brand=Brand.objects.all()
     brands=Brand.objects.all().annotate(bpro=Count('product'))
     products = Product.objects.filter(ptype=id)
-    wishes= Wishlist.objects.filter(useradded = request.user).values_list('productadded',flat=True)
+    wishes= Wishlist.objects.filter(useradded = customer).values_list('productadded',flat=True)
 
     context = {'products':products,'catogeries':catogeries,'brands':brands,'ptypes':ptypes,'wishes':wishes}
     return render(request, "shop.html",context)
@@ -498,14 +533,18 @@ def filter_shop_products(request):
     else :
         try:
             device = request.COOKIES['device']
-            customer, created = CustomUser.objects.get_or_create(device=device)
+            customer, created = Users.objects.get_or_create(device=device)
         except :
-            return redirect("UserLogin")    
+            return redirect("UserLogin")
+
     brands=request.GET.getlist('brands[]')
     categories = request.GET.getlist('catogery[]')
     ptype = request.GET.getlist('ptype[]')
 
+    print(brands)
+    print(categories)
     print(ptype)
+
     allProducts=Product.objects.all()
     if len(brands)>0:
         allProducts = allProducts.filter(btype__id__in=brands).distinct()
@@ -516,7 +555,6 @@ def filter_shop_products(request):
     
 
     wishes = Wishlist.objects.filter(useradded = customer)
-    print(wishes)
     t=render_to_string('filter.html',{'products':allProducts,'wishes':wishes})  
     return JsonResponse({'data': t})
 
