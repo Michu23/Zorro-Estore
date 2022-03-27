@@ -66,13 +66,13 @@
     <!-- background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB); -->
 
     <br>
-    <div class="container w-50 mt-4  mx-auto justify-content-center">
+    <div class="container w-100 mt-4  mx-auto justify-content-center" style="max-width: 600px;">
         <h3 class=" mx-auto justify-content-centertext-center p-5">Admin Login</h3>
     </div>
 
 
-    <div class="container col-3 text-dark bg-light bg-opacity-25"
-        style="margin-top: 100px; padding: 40px; border-radius: 10px;">
+    <div class="container w-100 text-dark bg-light bg-opacity-25"
+        style="margin-top: 100px; padding: 40px; border-radius: 10px;max-width: 600px;">
         <form method="POST" action="" class="justify-content-center d-flex row">
             {% for error in messages %}
             <p class="text-danger">{{error}}</p>
