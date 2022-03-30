@@ -30,13 +30,13 @@
     </div>
     <div class="mb-3 form-check">
 
-      <div class="d-flex justify-content-between row">
-        <div class="text-center ml-0 col-6">
+      <div class="d-flex row">
+        <div class="text-start col-6">
           New here? <a href="{% url 'UserReg' %}">Sign up!</a>
         </div>
         <div class="text-end col-6">
-          <a href="{% url 'OtpLogin' %}">OTP login</a><br>
-          <a href="{% url 'reset_password' %}">Reset password</a>
+          <a class="text-end" href="{% url 'OtpLogin' %}">OTP login</a><br>
+          <a class="text-end" href="{% url 'reset_password' %}">Reset password</a>
         </div>
       </div>
     </div>
@@ -44,7 +44,7 @@
   </form>
   <br><br>
   <div class="text-center justify-content-center mx-auto">
-    <a href="{% url 'UserHome' %}"><button class="btn btn-primary btn-dark ">Continue without Logging</button>></a>
+    <a href="{% url 'UserHome' %}"><button class="btn btn-primary btn-light ">Continue without Logging</button></a>
   </div>
 </div>
 <br /><br /><br /><br /><br />

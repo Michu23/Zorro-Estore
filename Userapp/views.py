@@ -293,7 +293,13 @@ def userlogout(request):
 
 @never_cache
 def userhome(request):
-    
+
+    try:
+        noneuser=Users.objects.get(username="")
+        noneuser.delete()
+    except:
+        pass
+
     if request.user.is_authenticated:
         customer=request.user
         order,created= Order.objects.get_or_create(customer=customer,complete=False,status="New")
