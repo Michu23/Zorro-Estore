@@ -16,7 +16,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <ul class="nav nav-tabs" role="tablist">
@@ -71,7 +71,7 @@
                                     class="video-popup"><i class="fa fa-play"></i></a> -->
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -154,13 +154,25 @@
                                 <li><span>Catogery :</span>{{product.catogery}}</li>
                                 <li><span>Brand :</span>{{product.btype}}</li>
                                 <li><span>PriceType :</span> {{product.ptype}}</li>
-                            </ul><br><br><br><br><br>
+                            </ul><br><br>
+
+                            <img class="xzoom" src="{{ product.image1.url }}" xoriginal="{{ product.image1.url }}" />
+                            <br><br>
+                            <img class="xzoom" src="{{ product.image2.url }}" xoriginal="{{ product.image2.url }}" />
+                            <br><br>
+                            <img class="xzoom" src="{{ product.image3.url }}" xoriginal="{{ product.image3.url }}" />
+                            <br><br>
+                            <img class="xzoom" src="{{ product.image4.url }}" xoriginal="{{ product.image4.url }}" />
+
+
+                            <br><br><br>
                             <h5><span>Guaranteed Safe Checkout</span></h5>
                             <img src="{% static 'img/shop-details/details-payment.png' %}" alt="">
                         </div>
                     </div>
                 </div>
             </div>
+
             <!-- <div class="row">
                 <div class="col-lg-12">
                     <div class="product__details__tab">

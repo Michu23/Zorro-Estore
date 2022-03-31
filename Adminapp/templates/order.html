@@ -26,7 +26,7 @@
                     <form class="mb-3 mb-md-0" action="{% url 'filterorder' %}">
                         <div class="row g-3">
                             <div class="col-md-3">
-                                <select class="form-select" onclick="this.location">
+                                <select class="form-select" onchange="location= this.value;">
                                     <option>Sort by</option>
                                     <option value="{% url 'AdminOrders' %}">Desc</option>
                                     <option value="{% url 'AdminOrdersa' %}">Asc</option>
@@ -98,7 +98,7 @@
                                 <a href="{% url 'acceptorder' order.id %}"><button
                                         class="btn btn-outline-success">Accept</button></a>
                                 {% else %}
-                                <a href=""><button class="btn btn-success opacity-0">Accept</button></a>
+                                <button class="btn btn-outline-success opacity-0" disabled>Accept</button>
                                 {% endif %}
                             </div>
                             <div>
@@ -108,7 +108,10 @@
                                     {% elif order.status == "Shipped" %}
                                     <a href="{% url 'deliverorder' order.id %}"><button
                                             class="btn btn-outline-success">Deliver</button></a>
+                                    {% elif order.status == "Cancelled" %}
+
                                     {% else %}
+
                                     <a href="{% url 'cancelorder' order.id %}"><button
                                             class="btn btn-outline-danger">Cancel</button></a>
                                     {% endif %}

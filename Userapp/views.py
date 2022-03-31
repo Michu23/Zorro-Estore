@@ -138,6 +138,7 @@ def wishlist(request):
     return JsonResponse(response)
     
 
+@login_required(login_url="UserLogin")
 def mywish(request):
     user=request.user
     product=Product.objects.all()
@@ -146,6 +147,7 @@ def mywish(request):
     wishlist= Wishlist.objects.filter(useradded = user)
     return render (request, 'wishlist.html',{"wishlist": wishlist,'wishes':wishes})
 
+@login_required(login_url="UserLogin")
 def removewish(request,id):
     user=request.user
     product=Product.objects.get(id=id)
@@ -276,20 +278,20 @@ def userlogout(request):
     return redirect("UserHome")
 
 
-    if request.user.is_authenticated:
-        customer=request.user
-    else:
-        try:
-            device=request.COOKIES['device']
-            customer,created=Users.objects.get_or_create(device=device)
-            order,created= Order.objects.get_or_create(customer=customer,complete=False)
-        except:
-            return redirect("UserLogin")
+    # if request.user.is_authenticated:
+    #     customer=request.user
+    # else:
+    #     try:
+    #         device=request.COOKIES['device']
+    #         customer,created=Users.objects.get_or_create(device=device)
+    #         order,created= Order.objects.get_or_create(customer=customer,complete=False)
+    #     except:
+    #         return redirect("UserLogin")
         
-    catogeries = Catogery.objects.all().annotate(numpro=Count('product'))
-    brands=Brand.objects.all().annotate(bpro=Count('product'))
-    ptypes=PriceType.objects.all().annotate(ppro=Count('product'))
-    context = {'products':products,'catogeries':catogeries,'brands':brands,'ptypes':ptypes,'wishes':wishes}
+    # catogeries = Catogery.objects.all().annotate(numpro=Count('product'))
+    # brands=Brand.objects.all().annotate(bpro=Count('product'))
+    # ptypes=PriceType.objects.all().annotate(ppro=Count('product'))
+    # context = {'products':products,'catogeries':catogeries,'brands':brands,'ptypes':ptypes,'wishes':wishes}
 
 @never_cache
 def userhome(request):
@@ -657,7 +659,42 @@ def usercart(request):
     context = {'items':items,'order':order}
     return render (request, "cart.html",context)
 
+@login_required(login_url="UserLogin")
+@never_cache
+def usercheckout(request):
+    if request.user.is_authenticated:
+        user = request.user
+        try:
+            last = Order.objects.filter(customer = user,complete=False).order_by('-id')[0]
+            if last.status == "BuyNow":
+                last.delete()
+            else:
+                order = Order.objects.get(customer=user,complete=False,status="New")
+                items = order.orderitem_set.all()
+            
+            
+        except:
+            order=  []
+            items = []
+            page="Empty"
+            return render(request,"cart.html",{'page':page})
 
+        try:
+            coup = CouponUsed.objects.get(user=user,used=True,applied=False)
+            coup.delete()
+            order.coupon_used=False
+            order.save()
+        except:
+            pass
+
+    
+    couponu = [i.coupon.code for i in CouponUsed.objects.filter(user=user)]
+    coup = CouponDetail.objects.exclude(code__in=couponu)
+    
+    form= MyAddressForm()
+    addr = Address.objects.filter(cust=user)
+    context = {'order':order,'items':items,'addr':addr,'form':form,'coupon':coup,'couponu':couponu}
+    return render(request, 'checkout.html', context )
 
 @login_required(login_url="UserLogin")
 def buynow(request,id):
@@ -682,10 +719,14 @@ def buynow(request,id):
         order.save()
     except:
         pass
+
+    
+    couponu = [i.coupon.code for i in CouponUsed.objects.filter(user=customer)]
+    coup = CouponDetail.objects.exclude(code__in=couponu)
     
     form= MyAddressForm()
     addr = Address.objects.filter(cust=customer)
-    context = {'product':product,'order':order,'items':items,'addr':addr,'form':form,'page':page}
+    context = {'product':product,'order':order,'items':items,'addr':addr,'form':form,'page':page,'coupon':coup,'couponu':couponu}
     return render(request, 'checkout.html',context)
 
 
@@ -702,7 +743,7 @@ def remove(request):
     return JsonResponse(response)
     return redirect('UserCart')
 
-
+@login_required(login_url="UserLogin")
 def userprofile(request):
     return render (request, "profile.html")
 
@@ -717,6 +758,7 @@ def profiledash(request):
     return render (request, "profiledash.html",context)
 
 @never_cache
+@login_required(login_url="UserLogin")
 def editprofile(request):
     user = request.user
     form=UserUpdateForm(instance=user)
@@ -736,7 +778,7 @@ def editprofile(request):
     return render(request,"editprofile.html",{'form':form})
 
 
-
+@login_required(login_url="UserLogin")
 def cancelorder(request, id):
     order = Order.objects.get(id = id)
     items = OrderItem.objects.filter(order = order)
@@ -750,7 +792,7 @@ def cancelorder(request, id):
     order.save()
     return redirect('UserOrders')
 
-
+@login_required(login_url="UserLogin")
 def returnorder(request, id):
     order = Order.objects.get(id = id)
     items = OrderItem.objects.filter(order = order)
@@ -758,6 +800,7 @@ def returnorder(request, id):
     order.save()
     return redirect('UserOrders')
 
+@login_required(login_url="UserLogin")
 def profileorder(request):
     user = request.user
     orders =Order.objects.filter(customer=user,complete=True)
@@ -765,6 +808,7 @@ def profileorder(request):
     context={'orders':orders,'items':items}
     return render (request, "profileorder.html",context)
 
+@login_required(login_url="UserLogin")
 def profileorderdetails(request,id):
     user = request.user
     order = Order.objects.get(id=id)
@@ -791,6 +835,7 @@ def address(request):
     context={'form':form,'addr':addr,'user':user}
     return render (request, "address.html",context)
 
+@login_required(login_url="UserLogin")
 def editaddress(request,pk):
     address = Address.objects.get(id=pk)
     form = MyAddressForm(instance=address)
@@ -802,7 +847,7 @@ def editaddress(request,pk):
             return redirect('UserAddress')
     return render(request,'editaddress.html',{'form':form,'id':pk})
 
-
+@login_required(login_url="UserLogin")
 def deleteaddress(request,pk):
     address = Address.objects.get(id=pk)
     address.delete()
@@ -813,7 +858,7 @@ def deleteaddress(request,pk):
 
 
 
-
+@login_required(login_url="UserLogin")
 @never_cache
 def proceed(request):
     if request.method == 'POST':
@@ -870,7 +915,7 @@ def proceed(request):
         return JsonResponse(response)
     return render(request, "userindex.html")
 
-
+@login_required(login_url="UserLogin")
 def payrazor(request):
     if request.method == 'GET':
         user=request.user
@@ -884,6 +929,7 @@ def payrazor(request):
     return JsonResponse({'name':user.username,'email':user.email,'total':total_amount,'phone':user.phone })
 
 @ csrf_exempt
+@login_required(login_url="UserLogin")
 def razorpay(request):
     user=request.user
     print(user)
@@ -942,6 +988,7 @@ def razorpay(request):
 
 
 @csrf_exempt
+@login_required(login_url="UserLogin")
 def paypal(request):
     print("/////////////////////////////////activating paypal")
     if request.method == 'POST':  
@@ -995,6 +1042,7 @@ def paypal(request):
     
     
 @never_cache
+@login_required(login_url="UserLogin")
 def verifycoupon(request):
     customer = request.user
     input_code = request.GET.get('input_code')
@@ -1050,47 +1098,6 @@ def verifycoupon(request):
     order.save()
     data = {'total_amount' : order.get_cart_totall,'percentage':coupon.percentage,'old_price':old_price ,'lessedmoney' :lessedinr}
     return JsonResponse(data)
-
-
-
-@login_required(login_url="UserLogin")
-@never_cache
-def usercheckout(request):
-    if request.user.is_authenticated:
-        user = request.user
-        try:
-            last = Order.objects.filter(customer = user,complete=False).order_by('-id')[0]
-            if last.status == "BuyNow":
-                last.delete()
-            else:
-                order = Order.objects.get(customer=user,complete=False,status="New")
-                items = order.orderitem_set.all()
-            
-            
-        except:
-            order=  []
-            items = []
-            page="Empty"
-            return render(request,"cart.html",{'page':page})
-
-        try:
-            coup = CouponUsed.objects.get(user=user,used=True,applied=False)
-            coup.delete()
-            order.coupon_used=False
-            order.save()
-        except:
-            pass
-
-    
-    couponu = [i.coupon.code for i in CouponUsed.objects.filter(user=user)]
-    coup = CouponDetail.objects.exclude(code__in=couponu)
-    
-    form= MyAddressForm()
-    addr = Address.objects.filter(cust=user)
-    context = {'order':order,'items':items,'addr':addr,'form':form,'coupon':coup,'couponu':couponu}
-    return render(request, 'checkout.html', context )
-
-
 
 
 def invoicedetails(request):

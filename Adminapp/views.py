@@ -25,7 +25,7 @@ import xlwt
 
 
 
-
+@login_required(login_url="AdminLogin")
 @never_cache
 def export_csv(request):
     order_data = Pay.objects.all()
@@ -37,6 +37,7 @@ def export_csv(request):
         writer.writerow([data.id, data.order.customer, data.order.get_cart_items, data.order.date_ordered,data.amount , data.method])
     return response
 
+@login_required(login_url="AdminLogin")
 @never_cache
 def export_excel(request):
     order_data = Pay.objects.all()
@@ -68,7 +69,7 @@ def export_excel(request):
     return response
 
 
-
+@login_required(login_url="AdminLogin")
 def salesreport(request):
     order_data=Pay.objects.all().order_by('id')
     yr = []
@@ -111,6 +112,7 @@ def salesreport(request):
     return render(request, "salesreport.html",context)
 
 
+@login_required(login_url="AdminLogin")
 @never_cache
 def adminsale(request):
     page = 'salesreport'
@@ -151,6 +153,7 @@ def adminsale(request):
     return render(request,'adminsale3.html', context)
 
 
+@login_required(login_url="AdminLogin")
 @never_cache
 def adminlogin(request):
     if request.user.is_authenticated:
@@ -178,6 +181,8 @@ def adminlogout(request):
     logout(request)
     return redirect("AdminLogin")
 
+
+@login_required(login_url="AdminLogin")
 @never_cache
 def adminhome(request):
     
@@ -214,11 +219,15 @@ def adminhome(request):
     
     return render(request, "adminindex.html",context)
 
+
+@login_required(login_url="AdminLogin")
 @never_cache
 def adminlogout(request):
     logout(request)
     return redirect('AdminLogin')
 
+
+@login_required(login_url="AdminLogin")
 def admincustomers(request):
     users = Users.objects.all().exclude(email="").order_by('id')
     paginator = Paginator (users, 6)
@@ -228,6 +237,8 @@ def admincustomers(request):
     return render(request, "customers.html",context)
 
 
+
+@login_required(login_url="AdminLogin")
 @never_cache
 def filtercust(request):
     print("//////////////////////////")
@@ -246,6 +257,8 @@ def filtercust(request):
     return render (request,'customers.html',context)
 
 
+
+@login_required(login_url="AdminLogin")
 @never_cache
 def filter_shop(request):
     print("///////////////////")
@@ -268,6 +281,8 @@ def filter_shop(request):
     return JsonResponse({'data': t})
 
 
+
+@login_required(login_url="AdminLogin")
 @never_cache
 def filterorder(request):
     print("//////////////////////////")
@@ -285,6 +300,8 @@ def filterorder(request):
     return render (request,'order.html',context)
 
 
+
+@login_required(login_url="AdminLogin")
 @never_cache
 def filterpro(request):
     user=request.user
@@ -306,7 +323,7 @@ def filterpro(request):
 
 
 
-
+@login_required(login_url="AdminLogin")
 def adminorders(request):
     orders=Order.objects.filter(complete=True).order_by('-date_ordered')
     paginator = Paginator (orders, 4)
@@ -315,6 +332,10 @@ def adminorders(request):
     context={'orders':paged_orders,'abc':'abc'}
     return render(request, "order.html",context)
 
+
+
+
+@login_required(login_url="AdminLogin")
 def adminordersa(request):
     orders=Order.objects.filter(complete=True).order_by('date_ordered')
     paginator = Paginator (orders, 4)
@@ -325,6 +346,8 @@ def adminordersa(request):
 
 
 
+
+@login_required(login_url="AdminLogin")
 def adminorderdetail(request,pk):
     user= request.user
     order = Order.objects.get(id=pk)
@@ -332,6 +355,9 @@ def adminorderdetail(request,pk):
     context = {'order':order,'items':items,'details':'details'}
     return render(request, "orderdetails.html",context)
 
+
+
+@login_required(login_url="AdminLogin")
 def editproduct(request,pk):
     product = Product.objects.get(id=pk)
     form = ProductForm(instance=product)
@@ -343,6 +369,9 @@ def editproduct(request,pk):
             return redirect('AdminProduct')
     return render(request,'editproduct.html',{'form':form})
 
+
+
+@login_required(login_url="AdminLogin")
 def deleteproduct(request):
     pk=request.GET.get('productid')
     product = Product.objects.get(id=pk)
@@ -350,6 +379,9 @@ def deleteproduct(request):
     response={'':''}
     return JsonResponse(response)
     
+
+
+@login_required(login_url="AdminLogin")
 @never_cache
 def blockuser(request):
     pk=request.GET.get('productid')
@@ -361,6 +393,9 @@ def blockuser(request):
     user.save()
     return redirect("AdminCustomers")
 
+
+
+@login_required(login_url="AdminLogin")
 def adminproduct(request):
     products = Product.objects.all()
     paginator = Paginator (products, 6)
@@ -374,7 +409,7 @@ def adminproduct(request):
     return render(request, "productlist.html",context)
 
 
-
+@login_required(login_url="AdminLogin")
 def adminproductna(request):
     products = Product.objects.all().order_by('name')
     paginator = Paginator (products, 6)
@@ -388,7 +423,7 @@ def adminproductna(request):
     return render(request, "productlist.html",context)
 
 
-
+@login_required(login_url="AdminLogin")
 def adminproductnd(request):
     products = Product.objects.all().order_by('-name')
     paginator = Paginator (products, 6)
@@ -402,7 +437,7 @@ def adminproductnd(request):
     return render(request, "productlist.html",context)
 
 
-
+@login_required(login_url="AdminLogin")
 def adminproductpa(request):
     products = Product.objects.all().order_by('price')
     paginator = Paginator (products, 6)
@@ -416,7 +451,7 @@ def adminproductpa(request):
     return render(request, "productlist.html",context)
 
 
-
+@login_required(login_url="AdminLogin")
 def adminproductpd(request):
     products = Product.objects.all().order_by('-price')
     paginator = Paginator (products, 6)
@@ -430,7 +465,7 @@ def adminproductpd(request):
     return render(request, "productlist.html",context)
 
 
-
+@login_required(login_url="AdminLogin")
 def adminproductsa(request):
     products = Product.objects.all().order_by('stocks')
     paginator = Paginator (products, 6)
@@ -444,7 +479,7 @@ def adminproductsa(request):
     return render(request, "productlist.html",context)
 
 
-
+@login_required(login_url="AdminLogin")
 def adminproductsd(request):
     products = Product.objects.all().order_by('-stocks')
     paginator = Paginator (products, 6)
@@ -460,12 +495,14 @@ def adminproductsd(request):
 
 
 
-
+@login_required(login_url="AdminLogin")
 def productoffer(request):
     products = Product.objects.all().order_by('-price')
     context = {'products':products,'offerpro':'offerpro'}
     return render(request, "productoffer.html",context)
 
+
+@login_required(login_url="AdminLogin")
 def applyoffer(request):
     pk=request.GET.get('productid')
     product = Product.objects.get(id=pk)
@@ -478,6 +515,10 @@ def applyoffer(request):
     status={'status':status}
     return JsonResponse(status)
 
+
+
+
+@login_required(login_url="AdminLogin")
 @never_cache
 def filterview(request,id):
     catogery=Catogery.objects.all()
@@ -490,6 +531,9 @@ def filterview(request,id):
     context = {'products':products,'catogeries':catogeries,'brands':brands,'ptypes':ptypes,'pro':'pro'}
     return render(request, "productlist.html",context)
 
+
+
+@login_required(login_url="AdminLogin")
 @never_cache
 def filterbrand(request,id):
     catogery=Catogery.objects.all()
@@ -502,6 +546,9 @@ def filterbrand(request,id):
     context = {'products':products,'catogeries':catogeries,'brands':brands,'ptypes':ptypes}
     return render(request, "productlist.html",context)
 
+
+
+@login_required(login_url="AdminLogin")
 @never_cache
 def filterprice(request,id):
     catogery=Catogery.objects.all()
@@ -517,7 +564,7 @@ def filterprice(request,id):
 
 
 
-
+@login_required(login_url="AdminLogin")
 def addproduct(request):
     form = ProductForm()
     if request.method == 'POST':
@@ -534,7 +581,7 @@ def addproduct(request):
         return render(request,'addproduct.html',{'form':form})
     return render(request,'addproduct.html')
 
-
+@login_required(login_url="AdminLogin")
 def acceptorder(request, id):
     order = Order.objects.get(id = id)
     items = OrderItem.objects.filter(order = order)
@@ -542,6 +589,7 @@ def acceptorder(request, id):
     order.save()
     return redirect('AdminOrders')
 
+@login_required(login_url="AdminLogin")
 def deliverorder(request, id):
     order = Order.objects.get(id = id)
     items = OrderItem.objects.filter(order = order)
@@ -550,6 +598,8 @@ def deliverorder(request, id):
     return redirect('AdminOrders')
 
 
+
+@login_required(login_url="AdminLogin")
 def cancelorder(request, id):
     order = Order.objects.get(id = id)
     items = OrderItem.objects.filter(order = order)
@@ -563,7 +613,7 @@ def cancelorder(request, id):
     order.save()
     return redirect('AdminOrders')
 
-
+@login_required(login_url="AdminLogin")
 def admincats(request):
     brands=Brand.objects.all()
     cats=Catogery.objects.all()
@@ -579,6 +629,9 @@ def admincats(request):
     context={'form':form,'cats':cats,'brands':brands}
     return render (request, "cats.html",context)
 
+
+
+@login_required(login_url="AdminLogin")
 def editcats(request,pk):
     page="edit"
     cats = Catogery.objects.get(id=pk)
@@ -594,18 +647,24 @@ def editcats(request,pk):
             print(formm.errors)
     return render(request,'cats.html',{'formm':formm,'page':page})
 
+
+
+@login_required(login_url="AdminLogin")
 def delcats(request,pk):
     cats = Catogery.objects.get(id=pk)
     cats.delete()
     return redirect("AdminCats")
 
 
-
+@login_required(login_url="AdminLogin")
 def couponsused(request):
     coupons = CouponUsed.objects.filter(applied=True)
     context={'coupons': coupons}
     return render(request,'couponused.html',context)
 
+
+
+@login_required(login_url="AdminLogin")
 def admincoupons(request):
     coupons= CouponDetail.objects.all()
     couponform= MyCouponForm()
@@ -620,6 +679,8 @@ def admincoupons(request):
     context= {'coupons':coupons,'couponform':couponform}
     return render (request, 'coupons.html',context)
 
+
+@login_required(login_url="AdminLogin")
 def editcoupons(request,id):
     print("/////////////////////hi")
     coup = CouponDetail.objects.get(id=id)
@@ -636,6 +697,8 @@ def editcoupons(request,id):
     context={'form':form,'coup':coup}
     return render(request,'editcoupon.html',context)
 
+
+@login_required(login_url="AdminLogin")
 def deletecoupons(request,id):
     return render(request,'coupons.html') 
 

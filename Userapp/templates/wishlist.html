@@ -54,7 +54,7 @@
                 {% for wishes in wishlist %}
                 <div class="col-lg-4 col-md-6 col-sm-12 wishes{{wishes.productadded.id}}">
                     <div class="card card-hover">
-                        <a href="#">
+                        <a href="{% url 'Product' wishes.productadded.id %}">
                             <img src="{{wishes.productadded.image1.url}}" class="card-img-top" alt="...">
                         </a>
                         <div class="card-body">
