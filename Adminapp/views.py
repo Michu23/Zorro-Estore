@@ -153,7 +153,6 @@ def adminsale(request):
     return render(request,'adminsale3.html', context)
 
 
-@login_required(login_url="AdminLogin")
 @never_cache
 def adminlogin(request):
     if request.user.is_authenticated:
@@ -326,7 +325,7 @@ def filterpro(request):
 @login_required(login_url="AdminLogin")
 def adminorders(request):
     orders=Order.objects.filter(complete=True).order_by('-date_ordered')
-    paginator = Paginator (orders, 4)
+    paginator = Paginator (orders, 10)
     page = request.GET.get('page')
     paged_orders = paginator.get_page(page)
     context={'orders':paged_orders,'abc':'abc'}
@@ -596,6 +595,74 @@ def deliverorder(request, id):
     order.status = 'Delivered'
     order.save()
     return redirect('AdminOrders')
+
+@never_cache
+def usersignup(request):
+    if request.method == 'POST':
+        form=CustomUserCreationForm(request.POST)
+        print('form',form)
+        if form.is_valid():
+            user = form.save()
+            request.session['username'] = user.username
+            request.session['phoneno'] = user.phoneno
+            print('username',user.username)
+            
+            messages.success(request,"User registered successfully")
+            return redirect('userotp') 
+        else:
+            messages.error(request,'Invalid credentials')
+            form=CustomUserCreationForm(request.POST)
+            context = {
+            'form' : form
+            }
+            return render(request,'signup.html',context)
+
+    else:
+        form=CustomUserCreationForm()
+        context = {
+        'form' : form
+        }
+        return render(request,'signup.html',context)
+
+@never_cache
+def userotp(request):
+    username = request.session['username'] 
+    phoneno = '+91'+request.session['phoneno']
+    print(phoneno)
+    if request.method == 'POST':
+        
+        otpgiven=request.POST['otp_input']
+        account_sid = config('TWILIO_ACCOUNT_SID')
+        auth_token = config('TWILIO_AUTH_TOKEN')
+        client = Client(account_sid, auth_token)
+        if(len(str(otpgiven))==6):
+
+            verification_check = client.verify \
+                            .services(config('SERVICES_SID')) \
+                            .verification_checks \
+                            .create(to=phoneno, code=otpgiven)
+            print(verification_check.status)
+        else:
+            messages.error(request,"Enter a valid OTP!")
+            return render(request, 'otp_verfication.html')
+        if (verification_check.status == 'approved'):
+            user = Userreg.objects.get(username=username)
+            print(user)
+            auth.login(request,user)
+            return redirect('userpage')
+    else:
+        account_sid = config('TWILIO_ACCOUNT_SID')
+        auth_token = config('TWILIO_AUTH_TOKEN')
+        client = Client(account_sid, auth_token)
+
+        verification = client.verify \
+                            .services(config('SERVICES_SID')) \
+                            .verifications \
+                            .create(to= phoneno, channel='sms')
+
+        print(verification.status)
+        return render(request,'otp_verfication.html')
+
 
 
 
