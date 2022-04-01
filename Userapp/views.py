@@ -807,7 +807,7 @@ def returnorder(request, id):
 @login_required(login_url="UserLogin")
 def profileorder(request):
     user = request.user
-    orders =Order.objects.filter(customer=user,complete=True)
+    orders =Order.objects.filter(customer=user,complete=True).order_by('-id')
     items=OrderItem.objects.all()
     context={'orders':orders,'items':items}
     return render (request, "profileorder.html",context)

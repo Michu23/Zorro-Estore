@@ -71,7 +71,7 @@ def export_excel(request):
 
 @login_required(login_url="AdminLogin")
 def salesreport(request):
-    order_data=Pay.objects.all().order_by('id')
+    order_data=Pay.objects.all().order_by('-id')
     yr = []
     ag = 2000
     months = ['January', 'February', 'March','April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
