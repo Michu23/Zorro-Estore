@@ -71,8 +71,8 @@
                                     data-action="add" style="cursor: pointer"><button class="btn btn-dark">+ Add
                                         To Cart</button></a>
 
-                                <a href="{% url 'removewish' wishes.productadded.id %}"><button
-                                        class="btn btn-danger rounded-circle">X</button></a>
+                                <button class="btn btn-danger rounded-circle remm"
+                                    data-id="{{wishes.productadded.id}}">X</button>
 
                             </div>
                         </div>
@@ -168,6 +168,31 @@
 </div>
 <!-- ./ content -->
 <br>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+
+    $('.remm').on('click', function (e) {
+        var id = $(this).data('id')
+        data = {
+            'id': id,
+        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "The product will be removed!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/removewish/' + id;
+
+            }
+        })
+
+    });
+</script>
 
 <script>
     $('.update-cart').on('click', function (e) {
