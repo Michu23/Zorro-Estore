@@ -241,6 +241,7 @@
             </ul>
           </nav>
         </div>
+
         <div class="col-lg-3 col-md-3">
           <div class="header__nav__option">
             <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt="" /></a>
@@ -253,8 +254,8 @@
       </div>
       <div class="canvas__open"><i class="fa fa-bars"></i></div>
     </div>
+
   </header>
-  <!-- Header Section End -->
   {% for message in messages %}
   <div class="container-fluid p-0">
     <div class="alert {{ message.tags }} alert-dismissible px-5" role="alert">
@@ -265,6 +266,8 @@
     </div>
   </div>
   {% endfor %}
+  <!-- Header Section End -->
+
   {% block content %} {% endblock %}
 
 

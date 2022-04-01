@@ -226,10 +226,14 @@ def signupotp(request):
         account_sid = config('account_sid')
         auth_token = config('auth_token')
         client = Client(account_sid, auth_token)
-        verification = client.verify \
-                            .services(config('services')) \
-                            .verifications \
-                            .create(to=number, channel='sms')
+        try:
+            verification = client.verify \
+                                .services(config('services')) \
+                                .verifications \
+                                .create(to=number, channel='sms')
+        except:
+            messages.error(request,"Invalid number")
+            return redirect("UserReg")
         return redirect ('SignupOtpVerify')
     return render(request,'otploginsign.html',{'phone':phone})
 
